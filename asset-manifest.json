@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/TuzDmitry.github.io/joint_cards_project/static/css/main.9247fc1f.chunk.css",
+    "main.js": "/TuzDmitry.github.io/joint_cards_project/static/js/main.ae669e0a.chunk.js",
+    "main.js.map": "/TuzDmitry.github.io/joint_cards_project/static/js/main.ae669e0a.chunk.js.map",
+    "runtime-main.js": "/TuzDmitry.github.io/joint_cards_project/static/js/runtime-main.44f7727c.js",
+    "runtime-main.js.map": "/TuzDmitry.github.io/joint_cards_project/static/js/runtime-main.44f7727c.js.map",
+    "static/js/2.eb46c871.chunk.js": "/TuzDmitry.github.io/joint_cards_project/static/js/2.eb46c871.chunk.js",
+    "static/js/2.eb46c871.chunk.js.map": "/TuzDmitry.github.io/joint_cards_project/static/js/2.eb46c871.chunk.js.map",
+    "index.html": "/TuzDmitry.github.io/joint_cards_project/index.html",
+    "precache-manifest.fe0d5cea96c4383d4536f8033cce7f85.js": "/TuzDmitry.github.io/joint_cards_project/precache-manifest.fe0d5cea96c4383d4536f8033cce7f85.js",
+    "service-worker.js": "/TuzDmitry.github.io/joint_cards_project/service-worker.js",
+    "static/css/main.9247fc1f.chunk.css.map": "/TuzDmitry.github.io/joint_cards_project/static/css/main.9247fc1f.chunk.css.map",
+    "static/js/2.eb46c871.chunk.js.LICENSE.txt": "/TuzDmitry.github.io/joint_cards_project/static/js/2.eb46c871.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.44f7727c.js",
+    "static/js/2.eb46c871.chunk.js",
+    "static/css/main.9247fc1f.chunk.css",
+    "static/js/main.ae669e0a.chunk.js"
+  ]
+}
