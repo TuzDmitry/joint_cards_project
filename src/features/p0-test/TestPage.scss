@@ -1,0 +1,10 @@
+
+$wrapperColor: #5f7e8d;
+
+.wrapper{
+  margin: 0 auto;
+  box-sizing: content-box;
+  min-height: 80vh;
+  min-width: 80vw;
+  background-color: $wrapperColor;
+}

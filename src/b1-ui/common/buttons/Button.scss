@@ -1,0 +1,71 @@
+$BG_but_Col: #1976D2;
+$hover-background-color: #115293;
+
+.buttonInner {
+  background-color: $BG_but_Col;
+  min-height: 35px;
+  min-width: 100px;
+  border: 1px solid $BG_but_Col;
+  border-radius: 5px;
+  color: mediumspringgreen;
+  outline: none;
+  text-transform: uppercase;
+  &:active {
+    opacity: 80%;
+  }
+  &:hover {
+    background-color: $hover-background-color;
+  }
+}
+
+
+
+
+
+.buttonOuter{
+  box-sizing: border-box;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+  padding: 7px 20px;
+  text-align: center;
+  text-transform: uppercase;
+  text-decoration: none;
+
+  outline: none;
+  max-width: 170px;
+  border: none;
+  color: white;
+  font-weight: bold;
+  position: relative;
+  z-index: 0;
+  background-color: #9049ff;;
+}
+.buttonOuter::before{
+  height: 8px;
+  width: 50%;
+  margin: 0 auto;
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 0;
+  z-index: -1;
+  background: #ffd800;
+  box-sizing: border-box;
+  transition-duration: .4s;
+}
+
+.buttonOuter:hover::before {
+  height: 30px;
+  width: 100%;
+}
+
+.buttonOuter:active::before{
+  background-color: red;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  height: 30px;
+  width: 80%;
+}
+
+

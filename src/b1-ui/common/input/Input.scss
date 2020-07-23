@@ -1,0 +1,14 @@
+$BG_but_Col: #1976D2;
+$BG_but_Col_hov: #115293;
+
+.inputCheckBox {
+  background-color: $BG_but_Col;
+  border: 1px solid $BG_but_Col;
+  outline: none;
+  &:active {
+    opacity: 80%;
+  }
+  &:hover {
+    background-color: $BG_but_Col_hov;
+  }
+}
