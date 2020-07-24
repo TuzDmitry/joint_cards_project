@@ -4,6 +4,7 @@ export const RegPage=()=>{
     return(
         <div>
             REGISTRATION PAGE
+            !!!!
         </div>
     )
 }
