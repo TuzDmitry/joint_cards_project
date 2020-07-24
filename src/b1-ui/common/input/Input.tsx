@@ -4,10 +4,13 @@ import "./Input.scss"
 
 
 export type InputNyaPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
-    & { onEnter?: () => void, error?: string };
-
+    & { onEnter?: () => void, error?: string }
+    & {
+    changeValue?: (value: string ) => void
+    value?: string
+}
 export const Input = (props: InputNyaPropsType) => {
-    const {onEnter, error,  ...restProps} = props;
+    const {onEnter, error, changeValue, ...restProps} = props;
 
     const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.charCode === 13) onEnter && onEnter();
@@ -21,10 +24,14 @@ export const Input = (props: InputNyaPropsType) => {
     let errorStyle: CSSProperties = {color: 'red', fontWeight: 'bold'}
 
 
+    const onChangeInputValue =  (e: ChangeEvent<HTMLInputElement>)=> {
+        changeValue &&  changeValue(e.currentTarget.value)
+    }
+
     debugger
     return (
         <>
-            <input style={St} onKeyPress={onKeyPress}  {...restProps}/>
+            <input style={St} onKeyPress={onKeyPress} onChange={onChangeInputValue}  {...restProps}/>
             {error ? <div style={errorStyle}>{error}</div> : null}
         </>
     );

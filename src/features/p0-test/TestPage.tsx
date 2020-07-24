@@ -25,7 +25,7 @@ export const TestPage = () => {
                 <Input error={''} onEnter={acton} type={"text"}/>
             </div>
             <div>
-                <CheckBox/>
+                <CheckBox>Checkbox</CheckBox>
             </div>
 
 

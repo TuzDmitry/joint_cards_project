@@ -1,10 +1,7 @@
 import {InferActionTypes} from "./store";
 
 let initialState={
-    email:null,
-    password:null,
-    firstName:null,
-    lastName:null
+    isRegistrated: false
 }
 
 type InitialStateType=typeof initialState
@@ -13,7 +10,7 @@ type InitialStateType=typeof initialState
 
 export const regPageReducer = (state:InitialStateType=initialState, action: any) => {
     switch (action.type) {
-        case "fdsf":
+        case 'SET_USER_DATA':
             return {...state}
         default:
             return state
@@ -28,7 +25,7 @@ const actions = {
         return ( {type: '', value} as const)
 
     },
-    updateCounterValue: (value: number) => {
-        return ({type: '', value: value} as const)
+    setUserData: (email: string, password: string) => {
+        return ({type: 'SET_USER_DATA', email, password} as const)
     }
 }
