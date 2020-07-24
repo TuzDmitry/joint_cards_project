@@ -20,7 +20,7 @@ const App=()=> {
             <Route path={'/recovery-password'} component={RecoveryPage}/>
             <Route path={'/change-password'} component={ChangePasswordPage}/>
             <Route path={'/profile'} component={ProfilePage}/>
-            <Route  path={'*'} render={() => <div>404 NOT FOUND </div>}/>
+            <Route  path={'/eror'} render={() => <div>404 NOT FOUND </div>}/>
         </Switch>
 
         {/*<Switch>*/}
