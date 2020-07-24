@@ -12,6 +12,8 @@ export const NavMenu = () => {
             }
         }>
             <div>
+
+                hey
                 <span className={"navItem"}><NavLink to={'/test'}>TEST</NavLink></span>
                 <span className={"navItem"}><NavLink to={'/login'}>LOGIN</NavLink></span>
                 <span className={"navItem"}><NavLink to={'/registration'}>REGISTRATION</NavLink></span>
