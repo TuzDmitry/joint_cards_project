@@ -8,7 +8,6 @@ export type ButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonE
 
 export const Button = (props: ButtonPropsType) => {
     let {children, ...restProps} = props
-    debugger
     return (
         <button {...restProps}>
             {children}

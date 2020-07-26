@@ -28,7 +28,7 @@ export const Input = (props: InputNyaPropsType) => {
         changeValue &&  changeValue(e.currentTarget.value)
     }
 
-    debugger
+
     return (
         <>
             <input style={St} onKeyPress={onKeyPress} onChange={onChangeInputValue}  {...restProps}/>

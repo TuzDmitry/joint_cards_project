@@ -4,19 +4,17 @@ import {CheckBox} from "../../b1-ui/common/checkbox/CheckBox";
 import {Button} from "../../b1-ui/common/buttons/Button";
 import {useDispatch, useSelector} from "react-redux";
 import { AppStateType } from "../../b2-bll/store";
+import {sendUserData} from "../../b2-bll/RegPageReducer";
 
 export const RegPage=()=>{
-
-
-
 
     const isRegistrated = useSelector<AppStateType, boolean>(state => state.regPage.isRegistrated)
 
     const dispatch = useDispatch()
 
     const submitData = () => {
-        // dispatch(setUserData( email, password))
-        alert(`${email} ${password}`)
+        dispatch(sendUserData( email, password))
+        // alert(`${email} ${password}`)
     }
 
     let [email, changeEmail] = useState('')
