@@ -5,10 +5,8 @@ import "./Input.scss"
 
 export type InputNyaPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
     & { onEnter?: () => void, error?: string }
-    & {
-    changeValue?: (value: string ) => void
-    value?: string
-}
+    & { changeValue?: (value: string ) => void
+    value?: string }
 export const Input = (props: InputNyaPropsType) => {
     const {onEnter, error, changeValue, ...restProps} = props;
 
@@ -16,13 +14,7 @@ export const Input = (props: InputNyaPropsType) => {
         if (e.charCode === 13) onEnter && onEnter();
     }
 
-    let St: CSSProperties = error ?
-        {marginLeft: 10, marginRight: 10, borderColor: 'red'} :
-        {marginLeft: 10, marginRight: 10};
-
-
-    let errorStyle: CSSProperties = {color: 'red', fontWeight: 'bold'}
-
+    let inputClass=error ?`red jointInput`:`jointInput`
 
     const onChangeInputValue =  (e: ChangeEvent<HTMLInputElement>)=> {
         changeValue &&  changeValue(e.currentTarget.value)
@@ -30,9 +22,9 @@ export const Input = (props: InputNyaPropsType) => {
 
 
     return (
-        <>
-            <input style={St} onKeyPress={onKeyPress} onChange={onChangeInputValue}  {...restProps}/>
-            {error ? <div style={errorStyle}>{error}</div> : null}
-        </>
+        <div className='item'>
+            <input className={inputClass} onKeyPress={onKeyPress} onChange={onChangeInputValue}  {...restProps}/>
+            {error ? <div className='error'>{error}</div> : null}
+        </div>
     );
 };

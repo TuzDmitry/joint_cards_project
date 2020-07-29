@@ -2,21 +2,34 @@ import axios from 'axios';
 
 
 const instance = axios.create({
-    baseURL: 'https://cards-nya-back.herokuapp.com/1.0'
+    // baseURL: 'https://cards-nya-back.herokuapp.com/1.0/'
+    baseURL: 'http://localhost:7542/1.0/'
 })
 
 export type UserDataType = {
     email: string
-    password: string
+    password: string,
+    rememberMe?: boolean
 }
 
 export const jointCardsApi = {
     setUserData(email: string, password: string) {
-        return instance.post<UserDataType>('/auth/register', {email: email, password: password})
-            // .then(res=>{
+        return instance.post<UserDataType>('auth/register', {email, password})
+        // .then(res=>{
         //             //     debugger
         //             //     return res.data
         //             // })
+    },
+    logIn(email: string, password: string, rememberMe: boolean) {
+        return instance.post<UserDataType>('auth/login', {email, password, rememberMe})
+            // .then(res => {
+            //     debugger
+            //     return res.data
+            // })
+            // .catch(res => {
+            //     debugger
+            //     return res.data
+            // })
     }
 }
 

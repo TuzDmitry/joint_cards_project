@@ -39,6 +39,7 @@ export const sendUserData = (email: string, password: string) => async (dispatch
     try {
         debugger
         const sendData = await jointCardsApi.setUserData(email, password)
+        debugger
         // dispatch(actions.setUserData(sendData.data.success))
     }
     catch (e) {

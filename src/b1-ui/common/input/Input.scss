@@ -5,10 +5,53 @@ $BG_but_Col_hov: #115293;
   background-color: $BG_but_Col;
   border: 1px solid $BG_but_Col;
   outline: none;
+
   &:active {
     opacity: 80%;
   }
+
   &:hover {
     background-color: $BG_but_Col_hov;
   }
+}
+
+
+.jointInput {
+  width: inherit;
+  font-size: 14px;
+  color: #333;
+  padding: 0 16px 0 10px;
+  border: 1px solid #ebebeb;
+  outline: 0;
+  height: 40px;
+  border-radius: 4px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  font-family: Roboto, Open Sans, Helvetica, Arial;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.jointInput:focus {
+  border-color: #5b5b5b;
+
+}
+
+.red {
+  border-color: red !important;
+}
+
+.item {
+  width: 100%;
+  position: relative;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  position: absolute;
+  top: 40px;
 }
