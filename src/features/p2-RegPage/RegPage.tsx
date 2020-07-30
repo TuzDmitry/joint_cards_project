@@ -1,18 +1,17 @@
 import React, {useState} from "react";
 import {Input} from "../../b1-ui/common/input/Input";
-import {CheckBox} from "../../b1-ui/common/checkbox/CheckBox";
 import {Button} from "../../b1-ui/common/buttons/Button";
 import {useDispatch, useSelector} from "react-redux";
-import { AppStateType } from "../../b2-bll/store";
+import {AppStateType} from "../../b2-bll/store";
 import {sendUserData} from "../../b2-bll/RegPageReducer";
 import {Redirect} from "react-router-dom";
 
-export const RegPage=()=>{
+export const RegPage = () => {
 
     const isRegistrated = useSelector<AppStateType, boolean>(state => state.regPage.isRegistrated)
     // let isAuth=useSelector<AppStateType, boolean>(state =>state.loginPage.isAuth )
 
-
+    const notification = useSelector<AppStateType, boolean>(state => state.regPage.notification)
 
     const dispatch = useDispatch()
 
@@ -25,19 +24,19 @@ export const RegPage=()=>{
     let [password, changePassword] = useState('')
 
 
-    if(isRegistrated) return <Redirect to={"/login"}/>
-    return(
+    if (isRegistrated) return <Redirect to={"/login"}/>
+    return (
         <div>
             <div>
                 REGISTRATION PAGE
                 !!!!
             </div>
-            {isRegistrated ? <div>Registration success!!!</div> : <div>Registration failed</div> }
+            <div>{notification}</div>
             <form>
-                <Input placeholder={'email'} value={email} changeValue={changeEmail}  />
+                <Input placeholder={'email'} value={email} changeValue={changeEmail}/>
                 <Input placeholder={'password'} value={password} changeValue={changePassword}/>
                 {/*<CheckBox>remember me</CheckBox>*/}
-                <Button className='buttonInner' children={'Submit'} onClick={submitData} />
+                <Button className='buttonInner' children={'Submit'} onClick={submitData}/>
             </form>
         </div>
     )
