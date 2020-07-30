@@ -1,10 +1,11 @@
-
+$bg-img: url('../../assets/images/background.jpg');
 
 .App {
   text-align: center;
   display: flex;
   flex-direction: column;
-}
+  background: $bg-img;
+  }
 
 .container{
   margin: 0 auto;
