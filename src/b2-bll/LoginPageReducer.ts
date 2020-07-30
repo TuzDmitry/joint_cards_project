@@ -2,7 +2,6 @@ import {InferActionTypes} from "./store";
 import {Dispatch} from "redux";
 import {jointCardsApi} from "../b3-dal/api";
 
-// const AUTH_SUCCESS="JOINT_CARDS_PROJECT/LogiPageReducer/AUTH_SUCCESS"
 
 let initialState = {
     email: null,
@@ -11,7 +10,8 @@ let initialState = {
     tokenDeathTime: null,
     _id: null,
     isAuth: false,
-    error:""
+    ///для сообщения пользователю
+    error: ""
 }
 
 type InitialStateType = typeof initialState
@@ -22,11 +22,11 @@ export const loginPageReducer = (state: InitialStateType = initialState, action:
         case "AUTH_SUCCESS":
             return {
                 ...state, email: action.email, name: action.name, token: action.token,
-                tokenDeathTime: action.tokenDeathTime, _id: action._id, isAuth: true,error:""
+                tokenDeathTime: action.tokenDeathTime, _id: action._id, isAuth: true, error: ""
             }
 
         case "AUTH_FAILED":
-            return {...state,error:"not correct email/password"}
+            return {...state, error: "not correct email/password"}
         default:
             return state
     }
@@ -34,7 +34,6 @@ export const loginPageReducer = (state: InitialStateType = initialState, action:
 
 
 type ActionType = InferActionTypes<typeof actions>
-
 
 type DataType = {
     email: string,
@@ -58,43 +57,20 @@ const actions = {
     })
 }
 
-
-// export const Autorization = () => {
-//     return async (dispatch: Dispatch<ActionType>) => {
-//         debugger
-//         let res = await API.checkAuth()
-//         try {
-//             debugger
-//             if (res.resultCode === 0) {
-//                 dispatch(setAuthSuccess(res.data))
-//             } else {
-//                 dispatch(setAuthFail())
-//             }
-//         } catch (e) {
-//             debugger
-//             console.log(e)
-//         }
-//         // dispatch(setAuthSuccess({email: "fdsfsdfsd", login: "fdsfs", userId: 21312}))
-//     }
-// }
-
-
-export const LogIn = (email: string, password: string, rememberMe: boolean) => {
+export const LogIn = (mail: string, password: string, rememberMe: boolean) => {
     return async (dispatch: Dispatch<ActionType>) => {
-
+        debugger
         try {
-            let res = await jointCardsApi.logIn(email, password, rememberMe)
+            let res = await jointCardsApi.logIn(mail, password, rememberMe)
             debugger
-            console.log(res.data)
-            // let objData={res.email, res.name, res.token, res.tokenDeathTime, res._id}
-            let objData = {
-                email: "test@emali.nya",
-                name: "test@emali.nya",
-                token: "3579de60 - 32da-11ea-b98b - 2dd305a3a42a",
-                tokenDeathTime: 1578658736966,
-                _id: "5e15dd6eea213400048fca8b"
-            };
-            dispatch(actions.setAuthSuccess(objData))
+            if (res.data.success) {
+                let {email, name, token, tokenDeathTime, _id} = res.data
+                let objData = {email, name, token, tokenDeathTime, _id}
+
+                dispatch(actions.setAuthSuccess(objData))
+            }else {
+                dispatch(actions.AuthFailed())
+            }
         } catch (e) {
             console.log(e)
             debugger
@@ -103,15 +79,5 @@ export const LogIn = (email: string, password: string, rememberMe: boolean) => {
     }
 }
 
-//
-// let a = {
-//     email: ""test@emali.nya"",
-//     name: ""test@emali.nya"",
-//     isAdmin: false,
-//     rememberMe: false,
-//     token: ""3579de60 - 32da-11ea-b98b - 2dd305a3a42a"",
-//     tokenDeathTime: 1578658736966,
-//     __v: 0,
-//     _id: ""5e15dd6eea213400048fca8b"",
-//     success: true
-// }
+
+

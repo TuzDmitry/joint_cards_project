@@ -27,8 +27,6 @@ export const LoginPage = () => {
 
 
     const submitData = () => {
-        // dispatch(sendUserData(email, password))
-        alert(`${email} ${password} ${rememberMe}`)
         dispatch(LogIn(email, password, rememberMe))
     }
 

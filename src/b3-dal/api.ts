@@ -10,26 +10,32 @@ export type UserDataType = {
     email: string
     password: string,
     rememberMe?: boolean
+    success?:any
 }
 
 export const jointCardsApi = {
     setUserData(email: string, password: string) {
         return instance.post<UserDataType>('auth/register', {email, password})
-        // .then(res=>{
-        //             //     debugger
-        //             //     return res.data
-        //             // })
-    },
-    logIn(email: string, password: string, rememberMe: boolean) {
-        return instance.post<UserDataType>('auth/login', {email, password, rememberMe})
             // .then(res => {
             //     debugger
-            //     return res.data
+            //     return res
             // })
-            // .catch(res => {
+            // .catch(res=>{
             //     debugger
-            //     return res.data
+            //     return res
             // })
+
+    },
+    logIn(email: string, password: string, rememberMe: boolean) {
+        return instance.post<any>('auth/login', {email, password, rememberMe})
+        // .then(res => {
+        //     debugger
+        //     return res
+        // })
+        // .catch(res => {
+        //     debugger
+        //     return res
+        // })
     }
 }
 
