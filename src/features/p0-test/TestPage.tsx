@@ -16,7 +16,10 @@ export const TestPage = () => {
         <div className={"wrapper"}>
 
             <div>
-                <Button onClick={acton} className={'buttonInner'}>Victor</Button>
+                <Button onClick={acton} className={'buttonInner'} disabled={true}>Victor</Button>
+            </div>
+            <div>
+                <Button onClick={acton} className={'buttonInner'} disabled={false}>Victor</Button>
             </div>
             <div>
                 <Button onClick={acton} className={'buttonOuter'}>Dima</Button>

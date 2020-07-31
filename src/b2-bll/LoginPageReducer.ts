@@ -1,6 +1,9 @@
-import {InferActionTypes} from "./store";
+import {AppStateType, InferActionTypes} from "./store";
 import {Dispatch} from "redux";
 import {jointCardsApi} from "../b3-dal/api";
+const AUTH_SUCCESS = "AUTH_SUCCESS";
+const AUTH_FAILED = "AUTH_FAILED";
+const IN_PROGRESS = "IN_PROGRESS"
 
 
 let initialState = {
@@ -11,22 +14,25 @@ let initialState = {
     _id: null,
     isAuth: false,
     ///для сообщения пользователю
-    error: ""
+    error: "",
+    inProgress: false
 }
 
 type InitialStateType = typeof initialState
 
 
-export const loginPageReducer = (state: InitialStateType = initialState, action: any) => {
+export const loginPageReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
     switch (action.type) {
-        case "AUTH_SUCCESS":
+        case AUTH_SUCCESS:
             return {
                 ...state, email: action.email, name: action.name, token: action.token,
                 tokenDeathTime: action.tokenDeathTime, _id: action._id, isAuth: true, error: ""
             }
 
-        case "AUTH_FAILED":
+        case AUTH_FAILED:
             return {...state, error: "not correct email/password"}
+        case IN_PROGRESS:
+            return {...state, inProgress: true}
         default:
             return state
     }
@@ -45,21 +51,27 @@ type DataType = {
 
 const actions = {
     AuthFailed: () => {
-        return ({type: "AUTH_FAILED"} as const)
+        return ({type: AUTH_FAILED} as const)
     },
     setAuthSuccess: (data: DataType) => ({
-        type: "AUTH_SUCCESS",
+        type: AUTH_SUCCESS,
         email: data.email,
         name: data.name,
         token: data.token,
         tokenDeathTime: data.tokenDeathTime,
         _id: data._id
-    })
+    }),
+    inProgressAC: (inProgress: boolean) => {
+        return (
+            {type: IN_PROGRESS, inProgress}
+        )
+    }
 }
 
 export const LogIn = (mail: string, password: string, rememberMe: boolean) => {
-    return async (dispatch: Dispatch<ActionType>) => {
+    return async (dispatch: Dispatch<ActionType>, getState: () => AppStateType) => {
         debugger
+        dispatch(actions.inProgressAC(true))
         try {
             let res = await jointCardsApi.logIn(mail, password, rememberMe)
             debugger
@@ -70,6 +82,7 @@ export const LogIn = (mail: string, password: string, rememberMe: boolean) => {
                 dispatch(actions.setAuthSuccess(objData))
             }else {
                 dispatch(actions.AuthFailed())
+                dispatch(actions.inProgressAC(true))
             }
         } catch (e) {
             console.log(e)

@@ -15,7 +15,7 @@ debugger
             <table style={{border:"2px solid black", borderCollapse: "collapse",}}>
                 <caption>Profile Data</caption>
                 <tr>
-                    <td >name</td>
+                    <td>name</td>
                     <td>{name}</td>
                 </tr>
                 <tr>

@@ -7,12 +7,16 @@ import {AppStateType} from "../../b2-bll/store";
 import {NavLink, Redirect} from "react-router-dom";
 import {LogIn} from "../../b2-bll/LoginPageReducer";
 import "./LoginPage.scss"
+import {InitialStateType} from "../../b2-bll/RegPageReducer";
+import {Preloader} from "../../b1-ui/common/preloader/Preloader";
 
 export const LoginPage = () => {
 
     let isAuth=useSelector<AppStateType, boolean>(state =>state.loginPage.isAuth )
     let errorE=useSelector<AppStateType, string>(state =>state.loginPage.error )
+    let inProgress = useSelector<AppStateType, boolean>(state => state.loginPage.inProgress)
 
+    // let {isAuth, inProgress } = useSelector<AppStateType, InitialStateType>(state => state.loginPage)
 
     let [email, changeEmail] = useState('')
     let [password, changePassword] = useState('')
@@ -32,7 +36,7 @@ export const LoginPage = () => {
 
 
     if(isAuth) return <Redirect to={"/profile"}/>
-
+    else if(inProgress) return   <Preloader/>
     return (
 
         <div>
@@ -44,7 +48,7 @@ export const LoginPage = () => {
                     <NavLink to={'/recovery-password'}>Forgot password?</NavLink>
                 </div>
                 <CheckBox onChange={onCheckBoxClick} checked={rememberMe}>remember me</CheckBox>
-                <Button className='buttonInner' onClick={submitData}>Sign In</Button>
+                <Button className='buttonInner' onClick={submitData} disabled={inProgress ? true : false}>Sign In</Button>
                 <div>
                     <NavLink to={'/registration'}>Registration</NavLink>
                 </div>
