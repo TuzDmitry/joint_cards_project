@@ -30,9 +30,9 @@ export const loginPageReducer = (state: InitialStateType = initialState, action:
             }
 
         case AUTH_FAILED:
-            return {...state, error: "not correct email/password"}
+            return {...state, error: "bad response"}
         case IN_PROGRESS:
-            return {...state, inProgress: true}
+            return {...state, inProgress: action.inProgress}
         default:
             return state
     }
@@ -82,12 +82,13 @@ export const LogIn = (mail: string, password: string, rememberMe: boolean) => {
                 dispatch(actions.setAuthSuccess(objData))
             }else {
                 dispatch(actions.AuthFailed())
-                dispatch(actions.inProgressAC(true))
             }
+            dispatch(actions.inProgressAC(false))
         } catch (e) {
             console.log(e)
-            debugger
+            debugger;
             dispatch(actions.AuthFailed())
+            dispatch(actions.inProgressAC(false))
         }
     }
 }

@@ -21,13 +21,10 @@ export const regPageReducer = (state: InitialStateType = initialState, action: a
         case SET_USER_DATA:
             return {...state, isRegistrated: action.success}
 
-        // case IN_PROGRESS:
-        //     return {...state, inProgress: action.inProgress}
-
         case CHANGE_NOTIFICATION:
             return {...state, notification: action.newText}
         case IN_PROGRESS:
-            return {...state, inProgress: true}
+            return {...state, inProgress: action.inProgress}
 
         default:
             return state
@@ -60,7 +57,6 @@ export const sendUserData = (email: string, password: string) => async (dispatch
     try {
         // enable preloyder
         const sendData = await jointCardsApi.setUserData(email, password)
-        debugger
         if (sendData.data.success) {
             dispatch(actions.changeNotification('ВЫ УСПЕШНО ЗАРЕГЕСТРИРОВАНЫ'))
             setTimeout(() => {
@@ -81,12 +77,12 @@ export const sendUserData = (email: string, password: string) => async (dispatch
     }
 
     catch (e) {
-        debugger
         alert(e)
+        setTimeout(() => {
+            dispatch(actions.inProgressAC(false))
+        }, 2000)
     }
-    setTimeout(() => {
-        dispatch(actions.inProgressAC(false))
-    }, 2000)
+
 }
 
 

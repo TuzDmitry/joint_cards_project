@@ -22,7 +22,6 @@ export const LoginPage = () => {
     let [password, changePassword] = useState('')
     let [rememberMe, changeRemember] = useState(false)
 
-
     const dispatch = useDispatch()
 
     const onCheckBoxClick=()=>{
@@ -37,18 +36,20 @@ export const LoginPage = () => {
 
     if(isAuth) return <Redirect to={"/profile"}/>
     else if(inProgress) return   <Preloader/>
+
+    debugger
     return (
 
         <div>
             LOGIN PAGE
             <form >
-                <Input placeholder={'Email'} error={errorE} value={email} changeValue={changeEmail}/>
-                <Input placeholder={'Password'} error='' value={password} changeValue={changePassword}/>
+                <Input placeholder={'Email'} error={errorE} value={email} changeValue={changeEmail} validate={"email"}/>
+                <Input placeholder={'Password'} error='' value={password} changeValue={changePassword} validate={"password"}/>
                 <div>
                     <NavLink to={'/recovery-password'}>Forgot password?</NavLink>
                 </div>
                 <CheckBox onChange={onCheckBoxClick} checked={rememberMe}>remember me</CheckBox>
-                <Button className='buttonInner' onClick={submitData} disabled={inProgress ? true : false}>Sign In</Button>
+                <Button className='buttonInner' onClick={submitData} disabled={inProgress? true : false}>Sign In</Button>
                 <div>
                     <NavLink to={'/registration'}>Registration</NavLink>
                 </div>

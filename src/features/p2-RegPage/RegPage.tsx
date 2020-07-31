@@ -39,8 +39,8 @@ export const RegPage = () => {
             </div>
             <div>{notification}</div>
             <form>
-                <Input placeholder={'email'} value={email} changeValue={changeEmail}/>
-                <Input placeholder={'password'} value={password} changeValue={changePassword}/>
+                <Input placeholder={'email'} value={email} changeValue={changeEmail} validate={"email"}/>
+                <Input placeholder={'password'} value={password} changeValue={changePassword} validate={"password"}/>
                 <Button className='buttonInner' children={'Submit'} onClick={submitData} disabled={inProgress ? true : false} />
             </form>
 
