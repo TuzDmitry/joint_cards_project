@@ -13,14 +13,7 @@ import {AppStateType} from "../../b2-bll/store";
 
 const App = () => {
 
-// const token=useSelector<AppStateType, string|null>(state => state.loginPage.token)
-//     const dispatch=useDispatch();
-//     useEffect(
-//         ()=>{
-//             // dispatch(GetInitialData())
-//             console.log("eff")
-//         },[token]
-//     )
+
 
     return (
         <div className="App">

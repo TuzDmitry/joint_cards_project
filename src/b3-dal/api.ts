@@ -16,26 +16,11 @@ export type UserDataType = {
 export const jointCardsApi = {
     setUserData(email: string, password: string) {
         return instance.post<UserDataType>('auth/register', {email, password})
-            // .then(res => {
-            //     debugger
-            //     return res
-            // })
-            // .catch(res=>{
-            //     debugger
-            //     return res
-            // })
 
     },
     logIn(email: string, password: string, rememberMe: boolean) {
         return instance.post<any>('auth/login', {email, password, rememberMe})
-        // .then(res => {
-        //     debugger
-        //     return res
-        // })
-        // .catch(res => {
-        //     debugger
-        //     return res
-        // })
+
     }
 }
 

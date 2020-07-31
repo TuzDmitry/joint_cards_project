@@ -7,7 +7,6 @@ import {AppStateType} from "../../b2-bll/store";
 import {NavLink, Redirect} from "react-router-dom";
 import {LogIn} from "../../b2-bll/LoginPageReducer";
 import "./LoginPage.scss"
-import {InitialStateType} from "../../b2-bll/RegPageReducer";
 import {Preloader} from "../../b1-ui/common/preloader/Preloader";
 
 export const LoginPage = () => {
@@ -16,7 +15,6 @@ export const LoginPage = () => {
     let errorE=useSelector<AppStateType, string>(state =>state.loginPage.error )
     let inProgress = useSelector<AppStateType, boolean>(state => state.loginPage.inProgress)
 
-    // let {isAuth, inProgress } = useSelector<AppStateType, InitialStateType>(state => state.loginPage)
 
     let [email, changeEmail] = useState('')
     let [password, changePassword] = useState('')

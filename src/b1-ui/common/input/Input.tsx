@@ -1,4 +1,4 @@
-import {InputHTMLAttributes, DetailedHTMLProps, CSSProperties, useState, ChangeEvent} from "react";
+import {InputHTMLAttributes, DetailedHTMLProps, ChangeEvent} from "react";
 import React from "react";
 import "./Input.scss"
 import {email, minLength7} from "../utils/validators";
