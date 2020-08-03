@@ -5,6 +5,8 @@ import {regPageReducer} from "./RegPageReducer";
 import {recoveryPageReducer} from "./RecoveryPageReducer";
 import {changePasswordPageReducer} from "./ChangePasswordPageReducer";
 import {profilePageReducer} from "./ProfilePageReducer";
+import {cardsReducer} from "./CardsReducer";
+import {searchReducer} from "./SearchReducer";
 
 export type InferActionTypes<T> = T extends { [keys: string]: (...args: any[]) => infer U } ? U : never;
 
@@ -13,12 +15,16 @@ const rootReducer = combineReducers({
     regPage: regPageReducer,
     recoveryPage: recoveryPageReducer,
     changePasswordPage: changePasswordPageReducer,
-    profilePage: profilePageReducer
+    profilePage: profilePageReducer,
+    packCards: cardsReducer,
+    searchLayer: searchReducer
 
 })
 
 type RootReducerType = typeof rootReducer
 export type AppStateType = ReturnType<RootReducerType>
+
+export type LPR = ReturnType<typeof loginPageReducer>
 
 
 export const store = createStore(rootReducer, applyMiddleware(thunk))

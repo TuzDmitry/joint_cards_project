@@ -1,9 +1,11 @@
 import {AppStateType, InferActionTypes} from "./store";
 import {Dispatch} from "redux";
 import {jointCardsApi} from "../b3-dal/api";
-const SET_USER_DATA = 'SET_USER_DATA';
-const IN_PROGRESS = "IN_PROGRESS";
-const CHANGE_NOTIFICATION = "CHANGE_NOTIFICATION"
+
+
+const SET_USER_DATA = 'joint_cards/RegPageReducer/SET_USER_DATA';
+const IN_PROGRESS = 'joint_cards/RegPageReducer/IN_PROGRESS';
+const CHANGE_NOTIFICATION = 'joint_cards/RegPageReducer/CHANGE_NOTIFICATION'
 
 let initialState = {
     isRegistrated: false,
@@ -16,7 +18,7 @@ let initialState = {
 export type InitialStateType = typeof initialState
 
 
-export const regPageReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
+export const regPageReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case SET_USER_DATA:
             return {...state, isRegistrated: action.success}
@@ -36,17 +38,16 @@ type ActionType = InferActionTypes<typeof actions>
 
 const actions = {
     setUserData: (success: boolean,) => {
-        debugger
         return ({type: SET_USER_DATA, success} as const)
     },
     changeNotification: (newText: string) => {
         return (
-            {type: CHANGE_NOTIFICATION, newText}
+            {type: CHANGE_NOTIFICATION, newText} as const
         )
     },
     inProgressAC: (inProgress: boolean) => {
         return (
-            {type: IN_PROGRESS, inProgress}
+            {type: IN_PROGRESS, inProgress} as const
         )
     }
 }
@@ -57,32 +58,25 @@ export const sendUserData = (email: string, password: string) => async (dispatch
     try {
         // enable preloyder
         const sendData = await jointCardsApi.setUserData(email, password)
-        if (sendData.data.success) {
-            dispatch(actions.changeNotification('ВЫ УСПЕШНО ЗАРЕГЕСТРИРОВАНЫ'))
-            setTimeout(() => {
-                dispatch(actions.setUserData(sendData.data.success))
-            }, 3000)
 
-// disable preloyder
-        }
-        else {
-            dispatch(actions.changeNotification('ЧТО_ТО ПОШЛО НЕ ТАК'))
-        }
+        dispatch(actions.changeNotification('ВЫ УСПЕШНО ЗАРЕГЕСТРИРОВАНЫ'))
+        setTimeout(() => {
+            dispatch(actions.setUserData(sendData.data.success))
+        }, 3000)
+
+
         setTimeout(() => {
             dispatch(actions.changeNotification(''))
             dispatch(actions.setUserData(false))
         }, 3000)
-// disable preloyder
         dispatch(actions.inProgressAC(false))
-    }
+    } catch (e) {
+        dispatch(actions.inProgressAC(false))
 
-    catch (e) {
-        alert(e)
-        setTimeout(() => {
-            dispatch(actions.inProgressAC(false))
-        }, 2000)
-    }
+        let errorText = e.response.data.error;
+        dispatch(actions.changeNotification(errorText))
 
+    }
 }
 
 

@@ -8,12 +8,17 @@ import {RecoveryPage} from '../../features/p3-RecoveryPage/RecoveryPage';
 import {ChangePasswordPage} from "../../features/p4-ChangePassPage/ChangePassPage";
 import {ProfilePage} from "../../features/p5-ProfilePage/ProfilePage";
 import {NavMenu} from '../header/NavMenu';
-import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "../../b2-bll/store";
+import {useDispatch} from "react-redux";
+import {Autorization} from '../../b2-bll/LoginPageReducer';
+import {PackCards} from "../../features/p6-PackCards/PackCards";
 
 const App = () => {
+    const dispatch = useDispatch();
 
-
+    useEffect(
+        () => {
+            dispatch(Autorization())
+        })
 
     return (
         <div className="App">
@@ -26,7 +31,10 @@ const App = () => {
                     <Route path={'/recovery-password'} component={RecoveryPage}/>
                     <Route path={'/change-password'} component={ChangePasswordPage}/>
                     <Route path={'/profile'} component={ProfilePage}/>
+                    <Route path={'/pack-cards'} component={PackCards}/>
+
                     <Route path={'/eror'} render={() => <div>404 NOT FOUND </div>}/>
+                    <Route exact path={'/'} component={ProfilePage}/>
                 </Switch>
             </div>
         </div>

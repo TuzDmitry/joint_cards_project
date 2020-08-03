@@ -2,7 +2,7 @@ import React, {ButtonHTMLAttributes, DetailedHTMLProps} from "react";
 import "./Button.scss"
 
 export type ButtonPropsType = DetailedHTMLProps<ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
-& {onClick: () => void }
+
 
 
 

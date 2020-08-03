@@ -1,11 +1,17 @@
-import React from "react";
+import React, {ClassAttributes, InputHTMLAttributes} from "react";
 import "./CheckBox.scss"
 
-// type PropsType = {
-//     children: string
-// }
+type PropsType = {
+    children: string
+}
 
-export const CheckBox = (props: any) => {
+export type CheckNyaPropsType =PropsType & ClassAttributes<HTMLInputElement>
+    & InputHTMLAttributes<HTMLInputElement>
+
+// const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+
+
+export const CheckBox = (props: CheckNyaPropsType) => {
     let {children, ...restProps}=props
 
     return (

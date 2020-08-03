@@ -1,27 +1,31 @@
 import {AppStateType, InferActionTypes} from "./store";
 import {Dispatch} from "redux";
 import {jointCardsApi} from "../b3-dal/api";
-const AUTH_SUCCESS = "AUTH_SUCCESS";
-const AUTH_FAILED = "AUTH_FAILED";
-const IN_PROGRESS = "IN_PROGRESS"
+import {restoreStateLocalStorage, saveStateToLocalStorage} from "../b1-ui/common/utils/LocalStorage";
+
+const AUTH_SUCCESS = 'joint_cards/LoginPageReducer/AUTH_SUCCESS';
+const AUTH_FAILED = 'joint_cards/LoginPageReducer/AUTH_FAILED';
+const IN_PROGRESS = 'joint_cards/LoginPageReducer/IN_PROGRESS'
 
 
 let initialState = {
-    email: null,
-    name: null,
-    token: null,
-    tokenDeathTime: null,
-    _id: null,
+    email: "",
+    name: "",
+    publicCardPacksCount: 0,
+    token: "",
+
+    tokenDeathTime: 10000000000,
+    _id: "",
     isAuth: false,
     ///для сообщения пользователю
     error: "",
     inProgress: false
 }
 
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 
 
-export const loginPageReducer = (state: InitialStateType = initialState, action: any): InitialStateType => {
+export const loginPageReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case AUTH_SUCCESS:
             return {
@@ -30,7 +34,7 @@ export const loginPageReducer = (state: InitialStateType = initialState, action:
             }
 
         case AUTH_FAILED:
-            return {...state, error: "bad response"}
+            return {...state, error: action.error}
         case IN_PROGRESS:
             return {...state, inProgress: action.inProgress}
         default:
@@ -42,56 +46,76 @@ export const loginPageReducer = (state: InitialStateType = initialState, action:
 type ActionType = InferActionTypes<typeof actions>
 
 type DataType = {
-    email: string,
-    name: string,
-    token: string,
-    tokenDeathTime: number,
+    email: string
+    name: string
+    publicCardPacksCount: number
+    token: string
+    tokenDeathTime: number
     _id: string
 }
 
 const actions = {
-    AuthFailed: () => {
-        return ({type: AUTH_FAILED} as const)
+    AuthFailed: (error: string) => {
+        return ({type: AUTH_FAILED, error} as const)
     },
-    setAuthSuccess: (data: DataType) => ({
-        type: AUTH_SUCCESS,
-        email: data.email,
-        name: data.name,
-        token: data.token,
-        tokenDeathTime: data.tokenDeathTime,
-        _id: data._id
-    }),
+    setAuthSuccess: (data: DataType) => {
+        return ({
+            type: AUTH_SUCCESS,
+            email: data.email,
+            name: data.name,
+            publicCardPacksCount: data.publicCardPacksCount,
+            token: data.token,
+            tokenDeathTime: data.tokenDeathTime,
+            _id: data._id
+        } as const)
+    },
     inProgressAC: (inProgress: boolean) => {
         return (
-            {type: IN_PROGRESS, inProgress}
+            {type: IN_PROGRESS, inProgress} as const
         )
     }
 }
 
+
 export const LogIn = (mail: string, password: string, rememberMe: boolean) => {
     return async (dispatch: Dispatch<ActionType>, getState: () => AppStateType) => {
-        debugger
         dispatch(actions.inProgressAC(true))
         try {
             let res = await jointCardsApi.logIn(mail, password, rememberMe)
-            debugger
-            if (res.data.success) {
-                let {email, name, token, tokenDeathTime, _id} = res.data
-                let objData = {email, name, token, tokenDeathTime, _id}
+////сохраняем полученный токен в сторадж
+            saveStateToLocalStorage(res.data.token, 'authToken')
 
-                dispatch(actions.setAuthSuccess(objData))
-            }else {
-                dispatch(actions.AuthFailed())
-            }
+
+            dispatch(actions.setAuthSuccess(res.data))
             dispatch(actions.inProgressAC(false))
         } catch (e) {
-            console.log(e)
-            debugger;
-            dispatch(actions.AuthFailed())
+            let errorText = e.response.data.error;
+            dispatch(actions.AuthFailed(errorText))
             dispatch(actions.inProgressAC(false))
+            setTimeout(() => {
+                dispatch(actions.AuthFailed(''))
+            }, 2000)
         }
     }
 }
 
+
+export const Autorization = () => {
+    return async (dispatch: Dispatch<ActionType>, getState: () => AppStateType) => {
+        //достаем токен из стораджа
+        let token = restoreStateLocalStorage('authToken', '')
+
+        try {
+            let res = await jointCardsApi.checkAuth(token)
+            ////сохраняем полученный токен в сторадж
+            saveStateToLocalStorage(res.data.token, 'authToken')
+            ////устанавливаем успешно-полученные данные
+            dispatch(actions.setAuthSuccess(res.data))
+
+        } catch (e) {
+            alert(e)
+        }
+    }
+}
 
 
