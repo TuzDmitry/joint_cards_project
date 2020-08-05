@@ -18,6 +18,7 @@ const App = () => {
     useEffect(
         () => {
             dispatch(Autorization())
+            console.log('перерисовка АПП')
         })
 
     return (
