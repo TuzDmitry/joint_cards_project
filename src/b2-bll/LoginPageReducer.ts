@@ -1,7 +1,7 @@
-import {AppStateType, InferActionTypes} from "./store";
-import {Dispatch} from "redux";
-import {jointCardsApi} from "../b3-dal/api";
-import {restoreStateLocalStorage, saveStateToLocalStorage} from "../b1-ui/common/utils/LocalStorage";
+import {AppStateType, InferActionTypes} from './store';
+import {Dispatch} from 'redux';
+import {jointCardsApi} from '../b3-dal/api';
+import {restoreStateLocalStorage, saveStateToLocalStorage} from '../b1-ui/common/utils/LocalStorage';
 
 const AUTH_SUCCESS = 'joint_cards/LoginPageReducer/AUTH_SUCCESS';
 const AUTH_FAILED = 'joint_cards/LoginPageReducer/AUTH_FAILED';
@@ -9,16 +9,16 @@ const IN_PROGRESS = 'joint_cards/LoginPageReducer/IN_PROGRESS'
 
 
 let initialState = {
-    email: "",
-    name: "",
+    email: '',
+    name: '',
     publicCardPacksCount: 0,
-    token: "",
+    token: '',
 
     tokenDeathTime: 10000000000,
-    _id: "",
+    _id: '',
     isAuth: false,
     ///для сообщения пользователю
-    error: "",
+    error: '',
     inProgress: false
 }
 
@@ -30,7 +30,7 @@ export const loginPageReducer = (state: InitialStateType = initialState, action:
         case AUTH_SUCCESS:
             return {
                 ...state, email: action.email, name: action.name, token: action.token,
-                tokenDeathTime: action.tokenDeathTime, _id: action._id, isAuth: true, error: ""
+                tokenDeathTime: action.tokenDeathTime, _id: action._id, isAuth: true, error: ''
             }
 
         case AUTH_FAILED:

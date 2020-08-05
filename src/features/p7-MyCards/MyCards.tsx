@@ -1,6 +1,6 @@
 import React from "react";
 
-export const CardPage = () => {
+export const MyCards = () => {
     return (
         <div>
             <div>CardName</div>

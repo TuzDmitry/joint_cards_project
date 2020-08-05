@@ -1,18 +1,26 @@
-import React from "react";
-import {useSelector} from "react-redux";
-import {AppStateType} from "../../b2-bll/store";
-import {Redirect} from "react-router-dom";
-import "./ProfilePage.scss"
+import React from 'react';
+import {useSelector} from 'react-redux';
+import {AppStateType} from '../../b2-bll/store';
+import {Redirect} from 'react-router-dom';
+import './ProfilePage.scss'
 
 export const ProfilePage = () => {
     let {isAuth, email, name, publicCardPacksCount, _id} = useSelector<AppStateType, any>(state => state.loginPage)
 
-    if (!isAuth) return <Redirect to={"/login"}/>
+    if (!isAuth) return <Redirect to={'/login'}/>
     return (
         <div>
             PROFILE PAGE
-            <table style={{border: "2px solid black", borderCollapse: "collapse",}}>
+            <table style={{border: '2px solid black', borderCollapse: 'collapse',}}>
                 <caption>Profile Data</caption>
+
+                <thead>
+                <tr>
+                    <th>Prop</th>
+                    <th>Val</th>
+                </tr>
+                </thead>
+                <tbody>
                 <tr>
                     <td>name</td>
                     <td>{name}</td>
@@ -29,6 +37,7 @@ export const ProfilePage = () => {
                     <td>cardsCount</td>
                     <td>{publicCardPacksCount}</td>
                 </tr>
+                </tbody>
             </table>
 
 
