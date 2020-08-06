@@ -36,7 +36,7 @@ export const jointCardsApi = {
     }
 }
 
-export type PackType={
+export type PackType = {
     cardsCount: number
     created: string
     grade: number
@@ -54,9 +54,30 @@ export type PackType={
 
 }
 
+
+export type CardsPackType = {
+    name?: string
+    path?: string
+    grade?: number
+    shots?: number
+    rating?: number
+    deckCover?: string
+    private?: boolean
+    type?: string
+}
 export const CardsAPI = {
-    getCards(token:string) {
-        return instance.get<any>(`cards/pack?token=${token}&pageCount=300`)
+    getCards(token: string, myID?: any) {
+        let idPart = myID ? `&user_id=${myID}` : ''
+        return instance.get<any>(`cards/pack?token=${token}&pageCount=5${idPart}`)
     },
+
+
+    addPackWithCards(cardsPack: CardsPackType, token: string) {
+
+        return instance.post<any>(`cards/pack`,
+            {cardsPack, token}
+        )
+    },
+
 }
 
