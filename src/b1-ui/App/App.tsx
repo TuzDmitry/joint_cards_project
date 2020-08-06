@@ -19,7 +19,7 @@ const App = () => {
         () => {
             dispatch(Autorization())
             console.log('перерисовка АПП')
-        })
+        },[])
 
     return (
         <div className="App">

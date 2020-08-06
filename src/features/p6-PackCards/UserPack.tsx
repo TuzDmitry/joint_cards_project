@@ -16,9 +16,9 @@ export const UserPack = (props: PropsType) => {
 
     return (
         <div className={'item'}>
-            <div>{user_id}</div>
+            <div>{user_id.slice(0,15)}</div>
             <div>{name}</div>
-            <div className={'name'}>{user_name}</div>
+            <div className={'name'}>{user_name.slice(0,15)}</div>
             <div className={'grade'}>{grade}</div>
             <div>
                 <button disabled={user_id !== myID}>del</button>

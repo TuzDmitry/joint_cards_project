@@ -1,7 +1,8 @@
 import {AppStateType, InferActionTypes} from './store';
 import {Dispatch} from 'redux';
 import {restoreStateLocalStorage, saveStateToLocalStorage} from '../b1-ui/common/utils/LocalStorage';
-import {CardsAPI, PackType} from '../b3-dal/api';
+import {CardsAPI, CardsPackType, PackType} from '../b3-dal/api';
+import {ThunkDispatch, ThunkAction} from 'redux-thunk';
 
 const SET_PACK_CARDS = 'joint_cards/LoginPageReducer/SET_PACK_CARDS';
 const SET_PAGINATOR_SETTINGS = 'joint_cards/LoginPageReducer/SET_PAGINATOR_SETTINGS';
@@ -40,10 +41,13 @@ export const packCardsReducer = (state: InitialStateType = initialState, action:
     }
 }
 
-type ActionType = InferActionTypes<typeof actions>
+type ActionType = InferActionTypes<typeof actions>;
+type ThunkType = ThunkAction<void, AppStateType, unknown, ActionType>;
 
+
+//Actions
 const actions = {
-    SetPackCards: (usersPack: Array<PackType>) => {
+    SetPackCards: (usersPack:Array<PackType>) => {
         return ({type: SET_PACK_CARDS, usersPack} as const)
     },
     SetPaginatorSettings: (pageCount: number, packsTotalCount: number, currentPage: number) => {
@@ -52,37 +56,61 @@ const actions = {
     }
 }
 
-//Thunk
-// export const GetPackCards = () => {
-//     return async (dispatch: Dispatch<ActionType>, getState: () => AppStateType) => {
-//         //достаем токен из стораджа
-//         let token = restoreStateLocalStorage('authToken', '')
-//
-//         try {
-//             let res = await CardsAPI.getCards(token)
-//             ////сохраняем полученный токен в сторадж
-//             saveStateToLocalStorage(res.data.token, 'authToken')
-//             ////устанавливаем успешно-полученные данные
-//             dispatch(actions.SetPackCards(res.data.cardPacks))
-//         } catch (e) {
-//             alert(e)
-//         }
+//Thunks
+export const GetPackCards = (myID?: any) => {
+    return async (dispatch: Dispatch<ActionType>, getState: () => AppStateType) => {
+        //достаем токен из стораджа
+        let token = restoreStateLocalStorage('authToken', '')
+
+        try {
+            let res = await CardsAPI.getCards(token, myID)
+            ////сохраняем полученный токен в сторадж
+            saveStateToLocalStorage(res.data.token, 'authToken')
+            ////устанавливаем успешно-полученные данные
+            dispatch(actions.SetPackCards(res.data.cardPacks))
+        } catch (e) {
+            let errorText = e.response.data.error;
+            debugger
+            alert(errorText)
+        }
+    }
+}
+
+// export const GetPacksCardsWithSettings = (page: number, pageCount: number) => async (dispatch: Dispatch<ActionType>, getState: () => AppStateType) => {
+//     let token = restoreStateLocalStorage('authToken', '')
+//     try {
+//         let res = await CardsAPI.getCardsWithSettings(token, page, pageCount)
+//         debugger
+//         ////сохраняем полученный токен в сторадж
+//         saveStateToLocalStorage(res.data.token, 'authToken')
+//         ////устанавливаем успешно-полученные данные
+//         dispatch(actions.SetPackCards(res.data.cardPacks));
+//         dispatch(actions.SetPaginatorSettings(pageCount,  res.data.cardPacksTotalCount, page ))
+//     } catch (e) {
+//         alert(e)
 //     }
 // }
 
-export const GetPacksCardsWithSettings = (page: number, pageCount: number) => async (dispatch: Dispatch<ActionType>, getState: () => AppStateType) => {
-    let token = restoreStateLocalStorage('authToken', '')
-    try {
-        let res = await CardsAPI.getCardsWithSettings(token, page, pageCount)
-        debugger
-        ////сохраняем полученный токен в сторадж
-        saveStateToLocalStorage(res.data.token, 'authToken')
-        ////устанавливаем успешно-полученные данные
-        dispatch(actions.SetPackCards(res.data.cardPacks));
-        dispatch(actions.SetPaginatorSettings(pageCount,  res.data.cardPacksTotalCount, page ))
-    } catch (e) {
-        alert(e)
+export const AddPackCards = (requestData: CardsPackType): ThunkType => {
+    return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+        //достаем токен из стораджа
+        let token = restoreStateLocalStorage('authToken', '')
+
+        try {
+            let res = await CardsAPI.addPackWithCards(requestData, token)
+            ////сохраняем полученный токен в сторадж
+            saveStateToLocalStorage(res.data.token, 'authToken')
+            ////устанавливаем успешно-полученные данные
+
+            dispatch(GetPackCards())
+        } catch (e) {
+            let errorText = e.response.data.error;
+            debugger
+            alert(errorText)
+        }
     }
 }
+
+
 
 

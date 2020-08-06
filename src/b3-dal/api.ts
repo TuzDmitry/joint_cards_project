@@ -54,13 +54,29 @@ export type PackType={
 
 }
 
-export const CardsAPI = {
-    // getCards(token:string) {
-    //     return instance.get<any>(`cards/pack?token=${token}&pageCount=3`)
-    // },
-
-    getCardsWithSettings(token:string, page: number, pageCount: number) {
-        return instance.get<any>(`cards/pack?token=${token}&page=${page}&pageCount=${pageCount}`)
-    }
+export type CardsPackType = {
+    name?: string
+    path?: string
+    grade?: number
+    shots?: number
+    rating?: number
+    deckCover?: string
+    private?: boolean
+    type?: string
 }
 
+export const CardsAPI = {
+    getCards(token: string, myID?: any) {
+        let idPart = myID ? `&user_id=${myID}` : ''
+        return instance.get<any>(`cards/pack?token=${token}&pageCount=5${idPart}`)
+    },
+    getCardsWithSettings(token:string, page: number, pageCount: number) {
+        return instance.get<any>(`cards/pack?token=${token}&page=${page}&pageCount=${pageCount}`)
+    },
+    addPackWithCards(cardsPack: CardsPackType, token: string) {
+
+        return instance.post<any>(`cards/pack`,
+            {cardsPack, token}
+        )
+    },
+}
