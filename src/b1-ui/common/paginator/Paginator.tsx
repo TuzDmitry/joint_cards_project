@@ -1,7 +1,6 @@
 import React, {ChangeEvent, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../../b2-bll/store';
-import {GetPacksCardsWithSettings} from '../../../b2-bll/PackCardsReducer';
 
 
 export const Paginator = ({}) => {
@@ -19,7 +18,7 @@ export const Paginator = ({}) => {
     let onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
         let value = e.currentTarget.value;
 
-        dispatch(GetPacksCardsWithSettings(2, 15));
+        // dispatch(GetPacksCardsWithSettings(2, 15));
 
     }
     let pagesCount = Math.ceil(packsTotalCount/pageCount);

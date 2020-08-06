@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Input} from '../../b1-ui/common/input/Input';
-import {AddPackCards, GetPackCards,GetPacksCardsWithSettings} from '../../b2-bll/PackCardsReducer';
+import {AddPackCards, GetPackCards} from '../../b2-bll/PackCardsReducer';
 import {useDispatch, useSelector} from 'react-redux';
 import './PackCards.scss'
 import {UserPack} from './UserPack';
