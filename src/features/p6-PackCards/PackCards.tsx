@@ -1,17 +1,19 @@
 import React, {useEffect} from 'react';
 import {Input} from '../../b1-ui/common/input/Input';
-import {GetPackCards} from '../../b2-bll/PackCardsReducer';
+import {GetPacksCardsWithSettings} from '../../b2-bll/PackCardsReducer';
 import {useDispatch, useSelector} from 'react-redux';
 import './PackCards.scss'
 import {UserPack} from './UserPack';
 import {AppStateType} from '../../b2-bll/store';
 import {PackType} from '../../b3-dal/api';
+import {Paginator} from '../../b1-ui/common/paginator/Paginator';
 
 export const PackCards = () => {
 
     let dispatch = useDispatch()
     useEffect(() => {
-        dispatch(GetPackCards())
+        // dispatch(GetPackCards())
+        dispatch(GetPacksCardsWithSettings(2, 15));
         // console.log('перерисовка списка колод')
     }, [])
 
@@ -47,6 +49,7 @@ export const PackCards = () => {
 
             </main>
             <footer>
+                <Paginator/>
 Здесь будет пагинация
             </footer>
         </div>

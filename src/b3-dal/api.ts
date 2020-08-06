@@ -55,8 +55,12 @@ export type PackType={
 }
 
 export const CardsAPI = {
-    getCards(token:string) {
-        return instance.get<any>(`cards/pack?token=${token}&pageCount=300`)
-    },
+    // getCards(token:string) {
+    //     return instance.get<any>(`cards/pack?token=${token}&pageCount=3`)
+    // },
+
+    getCardsWithSettings(token:string, page: number, pageCount: number) {
+        return instance.get<any>(`cards/pack?token=${token}&page=${page}&pageCount=${pageCount}`)
+    }
 }
 

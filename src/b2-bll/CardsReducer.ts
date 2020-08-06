@@ -4,9 +4,7 @@ const SET_CARDS = 'joint_cards/LoginPageReducer/SET_CARDS';
 
 let initialState = {
     cards: [],
-    pageSize: 10,
-    totalUsersCount: 0,
-    currentPage: 1,
+
 }
 
 export type InitialStateType = typeof initialState
