@@ -8,6 +8,8 @@ const SET_PACK_CARDS = 'joint_cards/LoginPageReducer/SET_PACK_CARDS';
 const SET_PAGINATOR_SETTINGS = 'joint_cards/LoginPageReducer/SET_PAGINATOR_SETTINGS';
 const SET_CURRENT_PAGE = 'joint_cards/PackPageReducer/SET_CURRENT_PAGE';
 const SET_CURRENT_PAGE_COUNT = 'joint_cards/PackPageReducer/SET_CURRENT_PAGE_COUNT'
+const SET_MY_PACK_CARDS = 'joint_cards/PackPageReducer/SET_MY_PACK_CARDS'
+const SET_PACK_CARDS_TOTAL_COUNT = 'joint_cards/PackPageReducer/SET_PACK_CARDS_TOTAL_COUNT'
 
 let initialState = {
     cards: [],
@@ -44,7 +46,17 @@ export const packCardsReducer = (state: InitialStateType = initialState, action:
             return {
                 ...state, cards: action.usersPack
             }
-        case SET_PAGINATOR_SETTINGS:
+        case SET_MY_PACK_CARDS:
+            return {
+                ...state, user_id: action.user_id
+            }
+        case SET_PACK_CARDS_TOTAL_COUNT:
+            return {
+                ...state,
+                packsTotalCount: action.packsTotalCount,
+
+            }
+            case SET_PAGINATOR_SETTINGS:
             debugger
             return {
                 ...state,
@@ -76,9 +88,16 @@ const actions = {
     SetPackCards: (usersPack:Array<PackType>) => {
         return ({type: SET_PACK_CARDS, usersPack} as const)
     },
+    SetMyPackCards: (user_id:string) => {
+        return ({type: SET_MY_PACK_CARDS, user_id} as const)
+    },
     SetPaginatorSettings: (pageCount: number, packsTotalCount: number, currentPage: number) => {
 
         return ({type: SET_PAGINATOR_SETTINGS, pageCount, packsTotalCount, currentPage} as const)
+    },
+    SetPackCardsTotalCount: (packsTotalCount: number) => {
+
+        return ({type: SET_PACK_CARDS_TOTAL_COUNT, packsTotalCount} as const)
     },
     SetCurrentPage: (page: number) => {
         return ({type: SET_CURRENT_PAGE, page} as const)
@@ -91,8 +110,8 @@ const actions = {
 //Thunks
 
 export const GetPacksCards = () => async (dispatch: Dispatch<ActionType>, getState: () => AppStateType) => {
-    let token = restoreStateLocalStorage('authToken', '')
 
+    let token = restoreStateLocalStorage('authToken', '')
     try {
         let obj={
             packName:getState().packCards.packName,
@@ -108,6 +127,7 @@ export const GetPacksCards = () => async (dispatch: Dispatch<ActionType>, getSta
         saveStateToLocalStorage(res.data.token, 'authToken')
         ////устанавливаем успешно-полученные данные
         dispatch(actions.SetPackCards(res.data.cardPacks));
+        dispatch(actions.SetPackCardsTotalCount(res.data.cardPacksTotalCount));
         // dispatch(actions.SetPaginatorSettings(pageCount,  res.data.cardPacksTotalCount, page ))
     } catch (e) {
         alert(e)
@@ -124,7 +144,6 @@ export const AddPackCards = (requestData: CardsPackType): ThunkType => {
             ////сохраняем полученный токен в сторадж
             saveStateToLocalStorage(res.data.token, 'authToken')
             ////устанавливаем успешно-полученные данные
-
             dispatch(GetPacksCards())
         } catch (e) {
             let errorText = e.response.data.error;
@@ -134,18 +153,59 @@ export const AddPackCards = (requestData: CardsPackType): ThunkType => {
     }
 }
 
+export const DeletePackCards = (id_pack: string): ThunkType => {
+    return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+        //достаем токен из стораджа
+        let token = restoreStateLocalStorage('authToken', '')
+
+        try {
+            let res = await CardsAPI.delPackWithCards(token,id_pack)
+            ////сохраняем полученный токен в сторадж
+            saveStateToLocalStorage(res.data.token, 'authToken')
+            ////устанавливаем успешно-полученные данные
+            dispatch(GetPacksCards())
+        } catch (e) {
+            let errorText = e.response.data.error;
+            alert(errorText)
+        }
+    }
+}
+
+export const UpdatePackCards = (id_pack: string): ThunkType => {
+    return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+        //достаем токен из стораджа
+        let token = restoreStateLocalStorage('authToken', '')
+
+        try {
+            let res = await CardsAPI.updatePackWithCards({}, token)
+            ////сохраняем полученный токен в сторадж
+            saveStateToLocalStorage(res.data.token, 'authToken')
+            ////устанавливаем успешно-полученные данные
+            dispatch(GetPacksCards())
+        } catch (e) {
+            let errorText = e.response.data.error;
+            alert(errorText)
+        }
+    }
+}
+
 export const GetCurrentPage= ( page: number): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
-    let token = restoreStateLocalStorage('authToken', '')
     dispatch(actions.SetCurrentPage(page))
     ///диспачим полученную страницу в бизнес и запускаем базовую санку
     dispatch(GetPacksCards())
 }
 export const GetPackCardsAccordingSelect= (pageCount: number): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
-    let token = restoreStateLocalStorage('authToken', '')
     dispatch(actions. SetCurrentPageCount(pageCount))
     ///диспачим полученную страницу в бизнес и запускаем базовую санку
     dispatch(GetPacksCards())
 }
+
+export const GetMyPackCards= (id: string=''): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+    dispatch(actions. SetMyPackCards(id))
+    ///диспачим полученную страницу в бизнес и запускаем базовую санку
+    dispatch(GetPacksCards())
+}
+
 
 //thunk 1 -простой запрос с базовыми параметрмаи
 //2 ) изменение базовых параметров пагинатора в бизнесе + thunk 1

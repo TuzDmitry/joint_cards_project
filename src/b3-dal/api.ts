@@ -104,4 +104,14 @@ export const CardsAPI = {
             {cardsPack, token}
         )
     },
+    delPackWithCards(token: string, id_pack: string) {
+        return instance.delete<any>(`cards/pack?token=${token}&id=${id_pack}`)
+    },
+    updatePackWithCards(cardsPack: CardsPackType, token: string) {
+
+        return instance.put<any>(`cards/pack`,
+            {cardsPack, token}
+        )
+    },
+
 }

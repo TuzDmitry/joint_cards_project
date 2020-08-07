@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Input} from '../../b1-ui/common/input/Input';
-import {AddPackCards, GetPacksCards} from '../../b2-bll/PackCardsReducer';
+import {AddPackCards, GetMyPackCards, GetPacksCards} from '../../b2-bll/PackCardsReducer';
 import {useDispatch, useSelector} from 'react-redux';
 import './PackCards.scss'
 import {UserPack} from './UserPack';
@@ -42,8 +42,8 @@ export const PackCards = () => {
             </header>
             <main>
                 <div style={{width: '100px', height: '60px'}}>
-                    <button onClick={()=>dispatch(GetPacksCards())}>ALL CARDS</button>
-                    <button onClick={()=>dispatch(GetPacksCards())}>MY CARDS</button>
+                    <button onClick={()=>dispatch(GetMyPackCards())}>ALL CARDS</button>
+                    <button onClick={()=>dispatch(GetMyPackCards(_id))}>MY CARDS</button>
                 </div>
 
 
