@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Input} from '../../b1-ui/common/input/Input';
-import {AddPackCards, GetPackCards} from '../../b2-bll/PackCardsReducer';
+import {AddPackCards, GetPacksCardsWithSettings} from '../../b2-bll/PackCardsReducer';
 import {useDispatch, useSelector} from 'react-redux';
 import './PackCards.scss'
 import {UserPack} from './UserPack';
@@ -13,8 +13,7 @@ export const PackCards = () => {
     let usersPack = useSelector<AppStateType, Array<PackType>>(state => state.packCards.cards)
     let dispatch = useDispatch()
     useEffect(() => {
-        // dispatch(GetPacksCardsWithSettings(2, 15));
-        dispatch(GetPackCards())
+        dispatch(GetPacksCardsWithSettings());
         // console.log('перерисовка списка колод')
     }, [])
 
@@ -43,8 +42,8 @@ export const PackCards = () => {
             </header>
             <main>
                 <div style={{width: '100px', height: '60px'}}>
-                    <button onClick={()=>dispatch(GetPackCards())}>ALL CARDS</button>
-                    <button onClick={()=>dispatch(GetPackCards(_id))}>MY CARDS</button>
+                    <button onClick={()=>dispatch(GetPacksCardsWithSettings())}>ALL CARDS</button>
+                    <button onClick={()=>dispatch(GetPacksCardsWithSettings(_id))}>MY CARDS</button>
                 </div>
 
 

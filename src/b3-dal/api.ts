@@ -36,7 +36,7 @@ export const jointCardsApi = {
     }
 }
 
-export type PackType={
+export type PackType = {
     cardsCount: number
     created: string
     grade: number
@@ -65,14 +65,48 @@ export type CardsPackType = {
     type?: string
 }
 
+
+type QueryGetParamsType = {
+    packName: string | undefined
+    min: number | undefined
+    max: number | undefined
+    sortPacks: {
+        goal: string | undefined, up: boolean
+    }
+    page: number | undefined
+    pageCount: number | undefined
+    user_id: string | undefined
+}
+
+
 export const CardsAPI = {
-    getCards(token: string, myID?: any) {
-        let idPart = myID ? `&user_id=${myID}` : ''
-        return instance.get<any>(`cards/pack?token=${token}&pageCount=5${idPart}`)
+    // getCards(token: string, myID?: any) {
+    //     let idPart = myID ? `&user_id=${myID}` : ''
+    //     return instance.get<any>(`cards/pack?token=${token}&pageCount=5${idPart}`)
+    // },
+    // getCardsWithSettings(token: string, page: number, pageCount: number) {
+    //     return instance.get<any>(`cards/pack?token=${token}&page=${page}&pageCount=${pageCount}`)
+    // },
+    getCardsWithSettings(token: string, params: any) {
+        debugger
+        let {packName, min, max, sortPacks, page, pageCount, user_id} = params;
+
+        let id = user_id ? `&user_id=${user_id}` : ''
+        let elsOnPage = pageCount ? `&pageCount=${pageCount}` : ''
+        let pageNum = page ? `&page=${page}` : '&page=1'
+
+        // let sortGoal = sortPacks.goal ?
+        let sortGoal = sortPacks ?
+            sortPacks.goal && sortPacks.up ? `&sortPacks=1${sortPacks.goal}` : `&sortPacks=0${sortPacks.goal}`
+            : ``
+        let maxVal = max ? `&max=${max}` : ''
+        let minVal = min ? `&min=${min}` : ''
+        let search = packName ? `&packName=${packName}` : ''
+
+        return instance.get<any>(`cards/pack?token=${token}${search}${minVal}${maxVal}${sortGoal}${pageNum}${elsOnPage}${id}`)
     },
-    getCardsWithSettings(token:string, page: number, pageCount: number) {
-        return instance.get<any>(`cards/pack?token=${token}&page=${page}&pageCount=${pageCount}`)
-    },
+
+
     addPackWithCards(cardsPack: CardsPackType, token: string) {
 
         return instance.post<any>(`cards/pack`,
