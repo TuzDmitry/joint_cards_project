@@ -66,7 +66,7 @@ export type CardsPackType = {
 }
 
 
-type QueryGetParamsType = {
+export type QueryGetParamsType = {
     packName: string | undefined
     min: number | undefined
     max: number | undefined
@@ -80,22 +80,14 @@ type QueryGetParamsType = {
 
 
 export const CardsAPI = {
-    // getCards(token: string, myID?: any) {
-    //     let idPart = myID ? `&user_id=${myID}` : ''
-    //     return instance.get<any>(`cards/pack?token=${token}&pageCount=5${idPart}`)
-    // },
-    // getCardsWithSettings(token: string, page: number, pageCount: number) {
-    //     return instance.get<any>(`cards/pack?token=${token}&page=${page}&pageCount=${pageCount}`)
-    // },
-    getCardsWithSettings(token: string, params: any) {
+    getCardsWithSettings(token: string, params: any = {}) {
         debugger
         let {packName, min, max, sortPacks, page, pageCount, user_id} = params;
 
         let id = user_id ? `&user_id=${user_id}` : ''
-        let elsOnPage = pageCount ? `&pageCount=${pageCount}` : ''
+        let elsOnPage = pageCount ? `&pageCount=${pageCount}` : ``
         let pageNum = page ? `&page=${page}` : '&page=1'
 
-        // let sortGoal = sortPacks.goal ?
         let sortGoal = sortPacks ?
             sortPacks.goal && sortPacks.up ? `&sortPacks=1${sortPacks.goal}` : `&sortPacks=0${sortPacks.goal}`
             : ``
@@ -105,7 +97,6 @@ export const CardsAPI = {
 
         return instance.get<any>(`cards/pack?token=${token}${search}${minVal}${maxVal}${sortGoal}${pageNum}${elsOnPage}${id}`)
     },
-
 
     addPackWithCards(cardsPack: CardsPackType, token: string) {
 
