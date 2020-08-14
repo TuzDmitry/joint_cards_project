@@ -11,6 +11,7 @@ import {NavMenu} from '../header/NavMenu';
 import {useDispatch} from "react-redux";
 import {Autorization} from '../../b2-bll/LoginPageReducer';
 import {PackCards} from "../../features/p6-PackCards/PackCards";
+import { ListCardsPack } from '../../features/p7-ListCardsPack/ListCardsPack';
 
 const App = () => {
     const dispatch = useDispatch();
@@ -33,6 +34,9 @@ const App = () => {
                     <Route path={'/change-password'} component={ChangePasswordPage}/>
                     <Route path={'/profile'} component={ProfilePage}/>
                     <Route path={'/pack-cards'} component={PackCards}/>
+                    <Route path={'/list-cards-pack/:id?'} render={() => <ListCardsPack/>}/>
+                    {/*<Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>*/}
+
 
                     <Route path={'/eror'} render={() => <div>404 NOT FOUND </div>}/>
                     <Route exact path={'/'} component={ProfilePage}/>

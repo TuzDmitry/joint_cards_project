@@ -1,17 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './PackCards.scss'
-import {PackType} from '../../b3-dal/api';
+import { PackType} from '../../b3-dal/api';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../b2-bll/store';
-import {DeletePackCards, UpdatePackCards} from '../../b2-bll/PackCardsReducer';
+import {DeletePackCards, UpdatePackCards,} from '../../b2-bll/PackCardsReducer';
+import {NavLink} from 'react-router-dom';
+import {UpdateTable} from './floatUpdateTable/UpdateTable';
+import {actions} from '../../b2-bll/TableReducer';
 
 type PropsType =
     {
         item: PackType
         key: string
     }
+
 export const UserPack = (props: PropsType) => {
-    debugger
+
+    let [updatePanel, hideUpdatePanel]=useState(true)
+
     let dispatch=useDispatch()
     let myID = useSelector<AppStateType, string>(state => state.loginPage._id)
     let {user_id, user_name, name, grade, _id} = props.item
@@ -21,20 +27,14 @@ export const UserPack = (props: PropsType) => {
         dispatch(DeletePackCards(_id))
     }
 
-
-    let obj={
-        // name: nameValue!=='No Name'?nameValue:undefined,
-        //     path: pathValue!=='/def'?pathValue:undefined,
-        // grade: gradeValue!==0?gradeValue:undefined,
-        // shots: shotsValue!==0?shotsValue:undefined,
-        // rating: ratingValue!==0?ratingValue:undefined,
-        // deckCover: deckCoverValue!=='url or base64'?nameValue:undefined,
-        // private: privateValue!==false?privateValue:undefined,
-        // type: typeValue!=='pack'?typeValue:undefined,
+    let onUpdateClick=()=>{
+        dispatch(actions.SetParams(props.item))
+        hideUpdatePanel(!updatePanel)
     }
 
-    let onUpdateClick=()=>{
-        dispatch(UpdatePackCards(_id))
+    let onPressUpdateButton=()=>{
+        hideUpdatePanel(!updatePanel)
+        dispatch(UpdatePackCards())
     }
 
     return (
@@ -49,8 +49,14 @@ export const UserPack = (props: PropsType) => {
             <div>
                 <button disabled={user_id !== myID} onClick={onUpdateClick}>update</button>
             </div>
-            <div><a href="">Has cards</a></div>
+            {/*<NavLink to={'/profile/'+ props.user.id}>*/}
+            <div><NavLink to={'/list-cards-pack/'+_id}>Has cards</NavLink></div>
             <div><a href="">Learn cards</a></div>
+
+            <div className={!updatePanel ? 'itemFormContainer itemFormContainer-show' : 'itemFormContainer'}>
+                <UpdateTable onUpdateClick={onPressUpdateButton} hideUpdatePanel={hideUpdatePanel}/>
+            </div>
+
         </div>
 
     )

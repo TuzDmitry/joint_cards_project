@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Input} from '../../b1-ui/common/input/Input';
-import {AddPackCards, GetMyPackCards, GetPacksCards} from '../../b2-bll/PackCardsReducer';
+import {AddPackCards, GetMyPackCards, GetPacksCards, UpdatePackCards} from '../../b2-bll/PackCardsReducer';
 import {useDispatch, useSelector} from 'react-redux';
 import './PackCards.scss'
 import {UserPack} from './UserPack';
@@ -8,31 +8,36 @@ import {AppStateType} from '../../b2-bll/store';
 import {CardsPackType, PackType} from '../../b3-dal/api';
 import {FloatTable} from './floatTable/FloatTable';
 import {Paginator} from '../../b1-ui/common/paginator/Paginator';
+import {UpdateTable} from './floatUpdateTable/UpdateTable';
 
 export const PackCards = () => {
-    let usersPack = useSelector<AppStateType, Array<PackType>>(state => state.packCards.cards)
+    let usersPack = useSelector<AppStateType, Array<PackType>>(state => state.packCards.packs)
     let dispatch = useDispatch()
     useEffect(() => {
         dispatch(GetPacksCards());
         // console.log('перерисовка списка колод')
     }, [])
 
-    let UsersPackItems = usersPack.map(item => <UserPack key={item._id} item={item}/>)
 
     let [hideItemPanel, changeHide]=useState(true)
-
-
     const onShowHideClick=()=>{
         changeHide(!hideItemPanel)
     }
-
-
     const onAddClick=(requestData:CardsPackType)=>{
+        debugger
         dispatch(AddPackCards(requestData))
     }
 
 
+
+
+
+
+
+
     let _id = useSelector<AppStateType, any>(state => state.loginPage._id)
+
+    let UsersPackItems = usersPack.map(item => <UserPack key={item._id} item={item} />)
 
     return (
         <div className={'PackCards'}>
@@ -51,9 +56,9 @@ export const PackCards = () => {
                     <div className={'navTable'}>
                         <div className={'item'}>
                             <div >USER ID</div>
-                            <div className={'name'}>Name</div>
+                            <div className={'name'}>Pack name</div>
                             <div >USER NAME</div>
-                            <div className={'grade'}>Crade</div>
+                            <div className={'grade'}>Grade</div>
                             <div>
                                 <button className={'butTable'} onClick={onShowHideClick}>add</button>
                             </div>
@@ -65,6 +70,7 @@ export const PackCards = () => {
                     <div className={!hideItemPanel ? 'itemFormContainer itemFormContainer-show' : 'itemFormContainer'}>
                         <FloatTable onAddClick={onAddClick} changeHide={changeHide}/>
                     </div>
+
 
                     <div className={'itemsContainer'}>
                        {UsersPackItems}

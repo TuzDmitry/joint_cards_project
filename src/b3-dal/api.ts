@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {ParamsTableType} from '../b2-bll/TableReducer';
 
 
 const instance = axios.create({
@@ -79,8 +80,8 @@ export type QueryGetParamsType = {
 }
 
 
-export const CardsAPI = {
-    getCardsWithSettings(token: string, params: any = {}) {
+export const PacksCardsAPI = {
+    getPacksWithCards(token: string, params: any = {}) {
         debugger
         let {packName, min, max, sortPacks, page, pageCount, user_id} = params;
 
@@ -107,11 +108,56 @@ export const CardsAPI = {
     delPackWithCards(token: string, id_pack: string) {
         return instance.delete<any>(`cards/pack?token=${token}&id=${id_pack}`)
     },
-    updatePackWithCards(cardsPack: CardsPackType, token: string) {
+    updatePackWithCards(params: ParamsTableType, token: string) {
 
+
+debugger
         return instance.put<any>(`cards/pack`,
-            {cardsPack, token}
+            {
+                cardsPack:params,
+                token}
         )
+    },
+
+}
+
+
+
+
+
+
+
+export const CardsAPI={
+    getCardsChoisedPack(token: string, params: any = {}) {
+        debugger
+        let {packName, min, max, sortPacks, page, pageCount, user_id} = params;
+
+        let id = user_id ? `&user_id=${user_id}` : ''
+        let elsOnPage = pageCount ? `&pageCount=${pageCount}` : ``
+        let pageNum = page ? `&page=${page}` : '&page=1'
+
+        let sortGoal = sortPacks ?
+            sortPacks.goal && sortPacks.up ? `&sortPacks=1${sortPacks.goal}` : `&sortPacks=0${sortPacks.goal}`
+            : ``
+        let maxVal = max ? `&max=${max}` : ''
+        let minVal = min ? `&min=${min}` : ''
+        let search = packName ? `&packName=${packName}` : ''
+
+        return instance.get<any>(`cards/pack?token=${token}${search}${minVal}${maxVal}${sortGoal}${pageNum}${elsOnPage}${id}`)
+    },
+
+    getCards(token: string, cardsPack_id:string) {
+        debugger
+        return instance.get<any>(`cards/card?token=${token}&cardsPack_id=${cardsPack_id}`)
+    },
+    createCards(token:string ,formData:any) {
+        debugger
+
+        return instance.post<any>(`cards/card`,
+            {
+                card:formData,
+                token
+            })
     },
 
 }

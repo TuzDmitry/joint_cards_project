@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import './FloatTable.scss'
 import {ItemTable} from './ItemTable';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppStateType} from '../../../b2-bll/store';
+import {ParamsTableType, actions} from '../../../b2-bll/TableReducer';
 
 export const FloatTable = (props: any) => {
-
+let dispatch=useDispatch()
     let onAddClick = () => {
         props.onAddClick(
             {
@@ -17,33 +20,60 @@ export const FloatTable = (props: any) => {
                 type: typeValue!=='pack'?typeValue:undefined,
             }
         )
+        // dispatch(actions.ClearParams)
+        changeNameValue('No Name')
         props.changeHide(true)
     }
 
-    let [nameValue, changeNameValue] = useState('No Name')
+    // let [nameValue, changeNameValue] = useState('No Name')
+    // let [nameEditMode, switchNameEditMode] = useState(false)
+    //
+    // let [pathValue, changePathValue] = useState('/def')
+    // let [pathEditMode, switchPathEditMode] = useState(false)
+    //
+    // let [gradeValue, changeGradeValue] = useState(0)
+    // let [gradeEditMode, switchGradeEditMode] = useState(false)
+    //
+    // let [shotsValue, changeShotsValue] = useState(0)
+    // let [shotsEditMode, switchShotsEditMode] = useState(false)
+    //
+    // let [ratingValue, changeRatingValue] = useState(0)
+    // let [ratingEditMode, switchRatingEditMode] = useState(false)
+    //
+    // let [deckCoverValue, changeDeckCoverValue] = useState('url or base64')
+    // let [deckCoverEditMode, switchDeckCoverEditMode] = useState(false)
+    //
+    // let [privateValue, changePrivateValue] = useState(false)
+    // let [privateEditMode, switchPrivateEditMode] = useState(false)
+    //
+    // let [typeValue, changeTypeValue] = useState('pack')
+    // let [typeEditMode, switchTypeEditMode] = useState(false)
+
+    let {name, path, grade, shots, rating, deckCover, private:privat, type}=useSelector<AppStateType, ParamsTableType>(state => state.tableParams)
+
+    let [nameValue, changeNameValue] = useState(name)
     let [nameEditMode, switchNameEditMode] = useState(false)
 
-    let [pathValue, changePathValue] = useState('/def')
+    let [pathValue, changePathValue] = useState(path)
     let [pathEditMode, switchPathEditMode] = useState(false)
 
-    let [gradeValue, changeGradeValue] = useState(0)
+    let [gradeValue, changeGradeValue] = useState(grade)
     let [gradeEditMode, switchGradeEditMode] = useState(false)
 
-    let [shotsValue, changeShotsValue] = useState(0)
+    let [shotsValue, changeShotsValue] = useState(shots)
     let [shotsEditMode, switchShotsEditMode] = useState(false)
 
-    let [ratingValue, changeRatingValue] = useState(0)
+    let [ratingValue, changeRatingValue] = useState(rating)
     let [ratingEditMode, switchRatingEditMode] = useState(false)
 
-    let [deckCoverValue, changeDeckCoverValue] = useState('url or base64')
+    let [deckCoverValue, changeDeckCoverValue] = useState(deckCover)
     let [deckCoverEditMode, switchDeckCoverEditMode] = useState(false)
 
-    let [privateValue, changePrivateValue] = useState(false)
+    let [privateValue, changePrivateValue] = useState(privat)
     let [privateEditMode, switchPrivateEditMode] = useState(false)
 
-    let [typeValue, changeTypeValue] = useState('pack')
+    let [typeValue, changeTypeValue] = useState(type)
     let [typeEditMode, switchTypeEditMode] = useState(false)
-
 
     return (
         <>

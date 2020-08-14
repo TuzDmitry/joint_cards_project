@@ -1,7 +1,7 @@
 import {AppStateType, InferActionTypes} from './store';
 import {Dispatch} from 'redux';
 import {restoreStateLocalStorage, saveStateToLocalStorage} from '../b1-ui/common/utils/LocalStorage';
-import {CardsAPI, CardsPackType, PackType, QueryGetParamsType} from '../b3-dal/api';
+import {CardsPackType, PacksCardsAPI, PackType} from '../b3-dal/api';
 import {ThunkDispatch, ThunkAction} from 'redux-thunk';
 
 const SET_PACK_CARDS = 'joint_cards/LoginPageReducer/SET_PACK_CARDS';
@@ -12,7 +12,7 @@ const SET_MY_PACK_CARDS = 'joint_cards/PackPageReducer/SET_MY_PACK_CARDS'
 const SET_PACK_CARDS_TOTAL_COUNT = 'joint_cards/PackPageReducer/SET_PACK_CARDS_TOTAL_COUNT'
 
 let initialState = {
-    cards: [],
+    packs: [],
     pageCount: 10,  //количество елементов(колод) на странице
     packsTotalCount: 50,     //общее количество колод(елементов) полученые из сервере
     currentPage: 1,         //текущая страница
@@ -26,16 +26,16 @@ let initialState = {
 }
 
 export type InitialStateType = {
-    cards: Array<PackType>,
+    packs: Array<PackType>
     pageCount: number
     packsTotalCount: number
     currentPage: number
-    packName: string, //null  //работает
-    min:number | null,
-    max: number | null,
+    packName: string //null  //работает
+    min:number | null
+    max: number | null
     sortPacks:{
-        goal:string,
-        up: boolean}, //goal:'grade', up:false //работает
+        goal:string
+        up: boolean} //goal:'grade', up:false //работает
     user_id: string
 }
 // export type InitialStateType = typeof initialState
@@ -44,7 +44,7 @@ export const packCardsReducer = (state: InitialStateType = initialState, action:
     switch (action.type) {
         case SET_PACK_CARDS:
             return {
-                ...state, cards: action.usersPack
+                ...state, packs: action.usersPack
             }
         case SET_MY_PACK_CARDS:
             return {
@@ -122,7 +122,8 @@ export const GetPacksCards = () => async (dispatch: Dispatch<ActionType>, getSta
             pageCount: getState().packCards.pageCount,//работает
             user_id: getState().packCards.user_id
         }
-        let res = await CardsAPI.getCardsWithSettings(token, obj)
+        let res = await PacksCardsAPI.getPacksWithCards(token, obj)
+        debugger
         ////сохраняем полученный токен в сторадж
         saveStateToLocalStorage(res.data.token, 'authToken')
         ////устанавливаем успешно-полученные данные
@@ -140,7 +141,7 @@ export const AddPackCards = (requestData: CardsPackType): ThunkType => {
         let token = restoreStateLocalStorage('authToken', '')
 
         try {
-            let res = await CardsAPI.addPackWithCards(requestData, token)
+            let res = await PacksCardsAPI.addPackWithCards(requestData, token)
             ////сохраняем полученный токен в сторадж
             saveStateToLocalStorage(res.data.token, 'authToken')
             ////устанавливаем успешно-полученные данные
@@ -159,7 +160,7 @@ export const DeletePackCards = (id_pack: string): ThunkType => {
         let token = restoreStateLocalStorage('authToken', '')
 
         try {
-            let res = await CardsAPI.delPackWithCards(token,id_pack)
+            let res = await PacksCardsAPI.delPackWithCards(token,id_pack)
             ////сохраняем полученный токен в сторадж
             saveStateToLocalStorage(res.data.token, 'authToken')
             ////устанавливаем успешно-полученные данные
@@ -171,13 +172,26 @@ export const DeletePackCards = (id_pack: string): ThunkType => {
     }
 }
 
-export const UpdatePackCards = (id_pack: string): ThunkType => {
+export const UpdatePackCards = (): ThunkType => {
     return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
         //достаем токен из стораджа
         let token = restoreStateLocalStorage('authToken', '')
 
+
         try {
-            let res = await CardsAPI.updatePackWithCards({}, token)
+            let obj={
+                _id: getState().tableParams._id,
+                name:getState().tableParams.name,
+                path:getState().tableParams.path,
+                grade: getState().tableParams.grade,
+                deckCover:getState().tableParams.deckCover,
+                shots: getState().tableParams.shots,
+                rating: getState().tableParams.rating,
+                private: getState().tableParams.private,
+                type: getState().tableParams.type,
+            }
+            let res = await PacksCardsAPI.updatePackWithCards(obj, token)
+            // debugger
             ////сохраняем полученный токен в сторадж
             saveStateToLocalStorage(res.data.token, 'authToken')
             ////устанавливаем успешно-полученные данные

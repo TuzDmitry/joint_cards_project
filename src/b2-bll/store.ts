@@ -7,6 +7,8 @@ import {changePasswordPageReducer} from "./ChangePasswordPageReducer";
 import {profilePageReducer} from "./ProfilePageReducer";
 import {searchReducer} from "./SearchReducer";
 import { packCardsReducer } from "./PackCardsReducer";
+import {cardsReducer} from './CardsReducer';
+import { tableReducer } from "./TableReducer";
 
 export type InferActionTypes<T> = T extends { [keys: string]: (...args: any[]) => infer U } ? U : never;
 
@@ -17,8 +19,9 @@ const rootReducer = combineReducers({
     changePasswordPage: changePasswordPageReducer,
     profilePage: profilePageReducer,
     packCards: packCardsReducer,
-    searchLayer: searchReducer
-
+    searchLayer: searchReducer,
+    listCardsPack:cardsReducer,
+    tableParams:tableReducer,
 })
 
 type RootReducerType = typeof rootReducer
