@@ -20,6 +20,9 @@ export const CardItem = (props: PropsType) => {
     let onDeleteItem = () => {
         dispatch((DeleteCard(props.item._id, props.item.cardsPack_id)))
     }
+    // let onChangeClick = () => {
+    //     dispatch(ChangeCard())
+    // }
 
     return (
         <div className={'item'}>
@@ -28,7 +31,7 @@ export const CardItem = (props: PropsType) => {
             <div>{props.item.shots}</div>
             <div className={'grade'}>{props.item.grade}</div>
             <div>
-                <button className={'butTable'}>CHANGE</button>
+                <button className={'butTable'} /*onClick={onChangeClick}*/ >CHANGE</button>
                 <button onClick={onDeleteItem}>DELETE</button>
             </div>
         </div>
