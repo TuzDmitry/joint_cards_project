@@ -7,6 +7,7 @@ import {GetPacksCards} from './PackCardsReducer';
 
 const SET_CARDS = 'joint_cards/CardsReducer/SET_CARDS';
 const SET_SEARCH_TEXT = 'joint_cards/CardsReducer/SET_SEARCH_TEXT';
+const SET_SORT_PARAMS = 'joint_cards/CardsReducer/SET_SORT_PARAMS'
 
 
 let initialState = {
@@ -58,6 +59,9 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Act
         case SET_SEARCH_TEXT:
             return {...state, cardQuestion: action.cardQuestion}
 
+        case SET_SORT_PARAMS:
+            return {...state, sortCards: {goal: action.goal, up: action.direction}}
+
         default:
             return state
     }
@@ -89,27 +93,15 @@ const actions = {
         debugger
         return ({type: SET_SEARCH_TEXT, cardQuestion} as const)
     },
+    SetSortParams: (goal: string, direction: boolean) => {
+        debugger
+        return ({type: SET_SORT_PARAMS, goal, direction} as const)
+    }
 }
 
 export const GetCards = (cardsPack_id: string) => async (dispatch: Dispatch<ActionType>, getState: () => AppStateType) => {
 
     let token = restoreStateLocalStorage('authToken', '')
-
-    // cards: [],
-    //     cardNumber: '',
-    //     ///
-    //     cardAnswer:'', // не обязательно
-    //     cardQuestion:'', // не обязательно
-    //                      // &cardsPack_id=5eb6a2f72f849402d46c6ac7
-    //     min:null, // не обязательно
-    //     max:null, // не обязательно
-    //     sortCards:{
-    //     goal:'',
-    //         up:false},// не обязательно
-    // currentPage:1, // не обязательно
-    //     pageCount: 10, // не обязательно
-
-
     try {
         let obj = {
             cardAnswer: getState().listCardsPack.cardAnswer,
@@ -134,7 +126,7 @@ export const GetCards = (cardsPack_id: string) => async (dispatch: Dispatch<Acti
     }
 }
 
-export const SearchCards = (cardsPack_id:string, searchText: string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+export const SearchCards = (cardsPack_id: string, searchText: string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
     debugger
     dispatch(actions.SetSeachText(searchText))
     ///диспачим полученную данные поиска в бизнес и запускаем базовую санку
@@ -224,4 +216,11 @@ export const DeleteCard = (CardId: string, cardsPack_id: string): ThunkType => a
     } catch (e) {
 
     }
+}
+export const SortCards = (goal: string, direction: boolean, cardsPack_id:string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+    debugger
+
+    dispatch(actions.SetSortParams(goal, direction))
+    ///диспачим полученные настройки сортировки в бизнес и запускаем базовую санку
+    dispatch(GetCards(cardsPack_id))
 }
