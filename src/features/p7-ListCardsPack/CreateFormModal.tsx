@@ -15,8 +15,9 @@ const dispatch=useDispatch()
     const {handleSubmit, register, errors, reset} = useForm();
 
     const onSubmit = (formData:any) => {
+        debugger
         console.log(formData);
-        dispatch(CreateCard({cardsPack_id:props.cardsPack_id, ...formData},reset))
+        dispatch(CreateCard({cardsPack_id:props.cardsPack_id,  ...formData},reset))
     }
 
 let onResetClick=()=>{

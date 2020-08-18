@@ -7,37 +7,11 @@ import {CardType, GetCards, DeleteCard, SearchCards, SortCards} from '../../b2-b
 import {CreateFormModal} from './CreateFormModal';
 import {SearchInput} from '../../b1-ui/common/searcInput/SearchInput';
 import {SortButton} from '../../b1-ui/common/sortButton/SortButton';
+import {CardItem} from './CardItem/CardItem';
 
-type PropsType =
-    {
-        item: CardType
-        key: string
-    }
 
-export const CardItem = (props: PropsType) => {
 
-    let dispatch = useDispatch();
 
-    let onDeleteItem = () => {
-        dispatch((DeleteCard(props.item._id, props.item.cardsPack_id)))
-    }
-    // let onChangeClick = () => {
-    //     dispatch(ChangeCard())
-    // }
-
-    return (
-        <div className={'item'}>
-            <div>{props.item.question}</div>
-            <div className={'name'}>{props.item.rating}</div>
-            <div>{props.item.shots}</div>
-            <div className={'grade'}>{props.item.grade}</div>
-            <div>
-                <button className={'butTable'} /*onClick={onChangeClick}*/ >CHANGE</button>
-                <button onClick={onDeleteItem}>DELETE</button>
-            </div>
-        </div>
-    )
-};
 
 export const ListCardsPack = () => {
     let paramURL: { id: string } = useParams();
@@ -65,7 +39,7 @@ export const ListCardsPack = () => {
     // }
 
 
-    let ListCards = cardsPack.map(item => <CardItem key={item._id} item={item}/>)
+    let ListCards = cardsPack.map(item => <CardItem key={item._id} item={item} />)
 
     let [seachLS, changeSeachLS] = useState('')
     let dispatchThunk = () => dispatch(SearchCards(cardsPack_id, seachLS));

@@ -163,45 +163,42 @@ export const CreateCard = (formData: any, reset: any): ThunkType => async (dispa
 
 }
 
-// export type CardType = {
-//     answer: string
+
 //     question: string
-//     cardsPack_id: string
 //     grade: number
 //     rating: number
 //     shots: number
-//     type: string
-//     created: string
-//     updated: string
-//     __v: number
-//     _id: string
-// }
 
-// export const ChangeCards = (): ThunkType => {
-//     return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
-//         let token = restoreStateLocalStorage('authToken', '')
-//
-//         try {
-//             // let obj = {
-//             //     _id: getState().tableParams._id,
-//             //     name: getState().tableParams.name,
-//             //     path: getState().tableParams.path,
-//             //     grade: getState().tableParams.grade,
-//             //     deckCover: getState().tableParams.deckCover,
-//             //     shots: getState().tableParams.shots,
-//             //     rating: getState().tableParams.rating,
-//             //     private: getState().tableParams.private,
-//             //     type: getState().tableParams.type,
-//             // }
-//             let res = await PacksCardsAPI.updatePackWithCards(obj, token)
-//             saveStateToLocalStorage(res.data.token, 'authToken')
-//             dispatch(GetPacksCards())
-//         } catch (e) {
-//             let errorText = e.response.data.error;
-//             alert(errorText)
-//         }
-//     }
-// }
+
+export const UpdateCards = (cardPackId:any, formData:any): ThunkType => {
+    return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+        let token = restoreStateLocalStorage('authToken', '')
+
+        try {
+            // let cardObj = {
+            //     question: getState().
+            // }
+
+            // let obj = {
+            //     _id: getState().tableParams._id,
+            //     name: getState().tableParams.name,
+            //     path: getState().tableParams.path,
+            //     grade: getState().tableParams.grade,
+            //     deckCover: getState().tableParams.deckCover,
+            //     shots: getState().tableParams.shots,
+            //     rating: getState().tableParams.rating,
+            //     private: getState().tableParams.private,
+            //     type: getState().tableParams.type,
+            // }
+            let res = await CardsAPI.updateCards(formData, token)
+            saveStateToLocalStorage(res.data.token, 'authToken')
+            dispatch(GetCards(cardPackId))
+        } catch (e) {
+            let errorText = e.response.data.error;
+            alert(errorText)
+        }
+    }
+}
 
 
 

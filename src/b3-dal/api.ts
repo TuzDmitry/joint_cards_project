@@ -149,6 +149,14 @@ debugger
                 token
             })
     },
+    updateCards(formData: any, token: string) {
+        debugger
+        return instance.put<any>(`cards/card`,
+            {
+                card: formData,
+                token
+            })
+    },
     deleteCards(token: string, CardId: string) {
         return instance.delete<any>(`cards/card?token=${token}&id=${CardId}`)
     }
