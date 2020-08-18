@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../b2-bll/store';
-import {Input} from '../../b1-ui/common/input/Input';
 import {Paginator} from '../../b1-ui/common/paginator/Paginator';
 import {useParams} from 'react-router-dom';
-import {CardType, GetCards, DeleteCard} from '../../b2-bll/CardsReducer';
+import {CardType, GetCards, DeleteCard, SearchCards} from '../../b2-bll/CardsReducer';
 import {CreateFormModal} from './CreateFormModal';
+import {SearchInput} from '../../b1-ui/common/searcInput/SearchInput';
 
 type PropsType =
     {
@@ -63,11 +63,14 @@ export const ListCardsPack = () => {
 
     let ListCards = cardsPack.map(item => <CardItem key={item._id} item={item}/>)
 
+    let [seachLS, changeSeachLS] = useState('')
+    let dispatchThunk = () => dispatch(SearchCards(cardsPack_id, seachLS));
+
     return (
         <div>
             CARDS OF THIS PACK
             <header>
-                <Input placeholder={'search cards'} value={''}/>
+                <SearchInput seachLS={seachLS} changeSeachLS={changeSeachLS} dispatchThunk={dispatchThunk}/>
             </header>
             <main>
 

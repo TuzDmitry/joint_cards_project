@@ -21,7 +21,7 @@ export const SearchInput = (props: PropsType) => {
     let onSearchClick = () => {
         debugger;
         dispatchThunk()
-        changeSeachLS('')
+        // changeSeachLS('')
     }
 
     return (

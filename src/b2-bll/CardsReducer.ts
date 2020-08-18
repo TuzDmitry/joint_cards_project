@@ -3,8 +3,10 @@ import {Dispatch} from 'redux';
 import {restoreStateLocalStorage, saveStateToLocalStorage} from '../b1-ui/common/utils/LocalStorage';
 import {CardsAPI} from '../b3-dal/api';
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
+import {GetPacksCards} from './PackCardsReducer';
 
-const SET_CARDS = 'joint_cards/LoginPageReducer/SET_CARDS';
+const SET_CARDS = 'joint_cards/CardsReducer/SET_CARDS';
+const SET_SEARCH_TEXT = 'joint_cards/CardsReducer/SET_SEARCH_TEXT';
 
 
 let initialState = {
@@ -53,6 +55,9 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Act
                 cards: action.cards
             }
 
+        case SET_SEARCH_TEXT:
+            return {...state, cardQuestion: action.cardQuestion}
+
         default:
             return state
     }
@@ -79,6 +84,10 @@ export type CardType = {
 const actions = {
     SetCards: (cards: Array<CardType>) => {
         return ({type: SET_CARDS, cards} as const)
+    },
+    SetSeachText: (cardQuestion: string) => {
+        debugger
+        return ({type: SET_SEARCH_TEXT, cardQuestion} as const)
     },
 }
 
@@ -112,8 +121,7 @@ export const GetCards = (cardsPack_id: string) => async (dispatch: Dispatch<Acti
             page: getState().listCardsPack.currentPage, // не обязательно
             pageCount: getState().listCardsPack.pageCount, // не обязательно
         }
-        // let res = await CardsAPI.getCards(token, obj)
-        let res = await CardsAPI.getCards(token, cardsPack_id)
+        let res = await CardsAPI.getCardsChoisedPack(token, obj)
         debugger
         ////сохраняем полученный токен в сторадж
         saveStateToLocalStorage(res.data.token, 'authToken')
@@ -126,6 +134,12 @@ export const GetCards = (cardsPack_id: string) => async (dispatch: Dispatch<Acti
     }
 }
 
+export const SearchCards = (cardsPack_id:string, searchText: string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+    debugger
+    dispatch(actions.SetSeachText(searchText))
+    ///диспачим полученную данные поиска в бизнес и запускаем базовую санку
+    dispatch(GetCards(cardsPack_id))
+}
 
 export const CreateCard = (formData: any, reset: any): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
     let token = restoreStateLocalStorage('authToken', '')

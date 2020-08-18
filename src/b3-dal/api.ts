@@ -121,22 +121,22 @@ export const PacksCardsAPI = {
 
 
 export const CardsAPI = {
-    getCardsChoisedPack(token: string, params: any = {}) {
+    getCardsChoisedPack(token: string, params: any) {
         debugger
-        let {packName, min, max, sortPacks, page, pageCount, user_id} = params;
+        let {cardQuestion, min, max, sortCards, page, pageCount, cardsPack_id} = params;
 
-        let id = user_id ? `&user_id=${user_id}` : ''
+        let id = cardsPack_id ? `&cardsPack_id=${cardsPack_id}` : ''
         let elsOnPage = pageCount ? `&pageCount=${pageCount}` : ``
         let pageNum = page ? `&page=${page}` : '&page=1'
 
-        let sortGoal = sortPacks ?
-            sortPacks.goal && sortPacks.up ? `&sortPacks=1${sortPacks.goal}` : `&sortPacks=0${sortPacks.goal}`
+        let sortGoal = sortCards.goal ?
+            sortCards.goal && sortCards.up ? `&sortCards=1${sortCards.goal}` : `&sortCards=0${sortCards.goal}`
             : ``
         let maxVal = max ? `&max=${max}` : ''
         let minVal = min ? `&min=${min}` : ''
-        let search = packName ? `&packName=${packName}` : ''
-
-        return instance.get<any>(`cards/pack?token=${token}${search}${minVal}${maxVal}${sortGoal}${pageNum}${elsOnPage}${id}`)
+        let search = cardQuestion ? `&cardQuestion=${cardQuestion}` : ''
+debugger
+        return instance.get<any>(`cards/card?token=${token}${search}${minVal}${maxVal}${sortGoal}${pageNum}${elsOnPage}${id}`)
     },
 
     getCards(token: string, cardsPack_id: string) {
