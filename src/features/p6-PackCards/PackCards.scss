@@ -30,24 +30,28 @@
   width: 150px;
 }
 
-.itemFormContainer{
+.itemFormContainer {
   display: flex;
 }
 
+.grade {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-
-.itemFormContainer{
+.itemFormContainer {
   position: absolute;
   display: none;
   z-index: 1;
 }
 
-.itemFormContainer-show{
-display: flex;
+.itemFormContainer-show {
+  display: flex;
 }
 
 
-.itemFormContainer button{
+.itemFormContainer button {
   background-color: #e13954;
   border-radius: 8px;
 }

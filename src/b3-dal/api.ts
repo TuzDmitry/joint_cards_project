@@ -82,7 +82,6 @@ export type QueryGetParamsType = {
 
 export const PacksCardsAPI = {
     getPacksWithCards(token: string, params: any = {}) {
-        debugger
         let {packName, min, max, sortPacks, page, pageCount, user_id} = params;
 
         let id = user_id ? `&user_id=${user_id}` : ''
@@ -100,34 +99,29 @@ export const PacksCardsAPI = {
     },
 
     addPackWithCards(cardsPack: CardsPackType, token: string) {
-
         return instance.post<any>(`cards/pack`,
             {cardsPack, token}
         )
     },
+
     delPackWithCards(token: string, id_pack: string) {
         return instance.delete<any>(`cards/pack?token=${token}&id=${id_pack}`)
     },
+
     updatePackWithCards(params: ParamsTableType, token: string) {
 
-
-debugger
         return instance.put<any>(`cards/pack`,
             {
-                cardsPack:params,
-                token}
+                cardsPack: params,
+                token
+            }
         )
     },
 
 }
 
 
-
-
-
-
-
-export const CardsAPI={
+export const CardsAPI = {
     getCardsChoisedPack(token: string, params: any = {}) {
         debugger
         let {packName, min, max, sortPacks, page, pageCount, user_id} = params;
@@ -146,16 +140,13 @@ export const CardsAPI={
         return instance.get<any>(`cards/pack?token=${token}${search}${minVal}${maxVal}${sortGoal}${pageNum}${elsOnPage}${id}`)
     },
 
-    getCards(token: string, cardsPack_id:string) {
-        debugger
+    getCards(token: string, cardsPack_id: string) {
         return instance.get<any>(`cards/card?token=${token}&cardsPack_id=${cardsPack_id}`)
     },
-    createCards(token:string ,formData:any) {
-        debugger
-
+    createCards(token: string, formData: any) {
         return instance.post<any>(`cards/card`,
             {
-                card:formData,
+                card: formData,
                 token
             })
     },
