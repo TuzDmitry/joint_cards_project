@@ -1,45 +1,36 @@
-import React, {ChangeEvent, SetStateAction, useState, useEffect} from "react";
-import {Input} from "../input/Input";
+import React, {ChangeEvent, useEffect} from 'react';
+import {Input} from '../input/Input';
 
-export const SearchInput = () => {
-
-
-    const people: Array<string> = [
-        "Siri",
-        "Alexa",
-        "Google",
-        "Facebook",
-        "Twitter",
-        "Linkedin",
-        "Sinkedin",
-        "Zidan",
-        "Ronaldo",
-        "Henry",
-        "Messi"
-    ];
+type PropsType = {
+    seachLS: string
+    changeSeachLS: (text: string) => void
+    dispatchThunk: () => void
+}
 
 
-    const [searchItem, setSearchItem] = useState('');
-    const [searchResults, setSearchResults] = useState([]);
+export const SearchInput = (props: PropsType) => {
+    let {seachLS, changeSeachLS, dispatchThunk} = props
 
-    const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearchItem(e.currentTarget.value)
-    }
     useEffect(() => {
-        let results: SetStateAction<any> = people.filter(person =>
-            person.toLowerCase().includes(searchItem.toLowerCase())
-        );
-        setSearchResults(results);
-    }, [searchItem]);
+    }, []);
+
+    let onSeachChange = (e: ChangeEvent<HTMLInputElement>) => {
+        changeSeachLS(e.currentTarget.value)
+    }
+
+    let onSearchClick = () => {
+        debugger;
+        dispatchThunk()
+        changeSeachLS('')
+    }
+
     return (
         <div>
-            <input placeholder="Search" type='text' onChange={handleSearch} />
-            <ul>
-                {searchResults.map(item => (
-                    <li>{item}</li>
-                ))}
-            </ul>
-            {/*<Input placeholder="Search" value={searchItem} changeValue={setSearchItem} />*/}
+            <Input placeholder={'search cards'}
+                   value={seachLS}
+                   onEnter={onSearchClick}
+                   onChange={onSeachChange}/>
+            <button onClick={onSearchClick}>SEARCH</button>
         </div>
     )
 }

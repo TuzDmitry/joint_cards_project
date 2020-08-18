@@ -34,10 +34,10 @@ export const Input = (props: InputNyaPropsType) => {
             switch (validate) {
                 case "email":
                     errorMessage = email(restProps.value)
-                    check = errorMessage ? true : false
+                    check = errorMessage
                     break;
                 case "password":
-                    check = restProps.value.length < 7 ? true : false
+                    check = restProps.value.length < 7
                     errorMessage = minLength7(restProps.value)
                     break;
             }
