@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../b2-bll/store';
 import {Input} from '../../b1-ui/common/input/Input';
 import {Paginator} from '../../b1-ui/common/paginator/Paginator';
-import { useParams } from 'react-router-dom';
-import {CardType, GetCards} from '../../b2-bll/CardsReducer';
+import {useParams} from 'react-router-dom';
+import {CardType, GetCards, DeleteCard} from '../../b2-bll/CardsReducer';
 import {CreateFormModal} from './CreateFormModal';
 
 type PropsType =
@@ -13,23 +13,31 @@ type PropsType =
         key: string
     }
 
-export const CardItem = (props:PropsType) => {
+export const CardItem = (props: PropsType) => {
+
+    let dispatch = useDispatch();
+
+    let onDeleteItem = () => {
+        dispatch((DeleteCard(props.item._id, props.item.cardsPack_id)))
+    }
+
     return (
         <div className={'item'}>
-            <div >{props.item.question}</div>
+            <div>{props.item.question}</div>
             <div className={'name'}>{props.item.rating}</div>
-            <div >{props.item.shots}</div>
+            <div>{props.item.shots}</div>
             <div className={'grade'}>{props.item.grade}</div>
             <div>
-                <button className={'butTable'} >CHANGE</button>
+                <button className={'butTable'}>CHANGE</button>
+                <button onClick={onDeleteItem}>DELETE</button>
             </div>
         </div>
     )
 };
 
 export const ListCardsPack = () => {
-    let paramURL:{id:string}=useParams();
-    let cardsPack_id=paramURL.id
+    let paramURL: { id: string } = useParams();
+    let cardsPack_id = paramURL.id
 
     let cardsPack = useSelector<AppStateType, Array<CardType>>(state => state.listCardsPack.cards)
 
@@ -40,8 +48,7 @@ export const ListCardsPack = () => {
     }, [])
 
 
-
-    let [hideCreatePanel, changeHide]=useState(true)
+    let [hideCreatePanel, changeHide] = useState(true)
 
 
     // const onShowHideClick=()=>{
@@ -57,7 +64,7 @@ export const ListCardsPack = () => {
     let ListCards = cardsPack.map(item => <CardItem key={item._id} item={item}/>)
 
     return (
-        <div >
+        <div>
             CARDS OF THIS PACK
             <header>
                 <Input placeholder={'search cards'} value={''}/>
@@ -83,20 +90,22 @@ export const ListCardsPack = () => {
                 <div className={'table'}>
                     <div className={'navTable'}>
                         <div className={'item'}>
-                            <div >Question</div>
+                            <div>Question</div>
                             <div className={'name'}>Rating</div>
-                            <div >Shots</div>
+                            <div>Shots</div>
                             <div className={'grade'}>Grade</div>
                             <div>
-                                <button className={'butTable'} >LEARN</button>
+                                <button className={'butTable'}>LEARN</button>
                             </div>
                             <div>
-                                <button className={'butTable'} onClick={()=>changeHide(!hideCreatePanel)} >CREATE</button>
+                                <button className={'butTable'} onClick={() => changeHide(!hideCreatePanel)}>CREATE
+                                </button>
                             </div>
 
                         </div>
                     </div>
-                    <div className={!hideCreatePanel ? 'itemFormContainer itemFormContainer-show' : 'itemFormContainer'}>
+                    <div
+                        className={!hideCreatePanel ? 'itemFormContainer itemFormContainer-show' : 'itemFormContainer'}>
                         {/*<FloatTable onAddClick={onAddClick} changeHide={changeHide}/>*/}
                         <CreateFormModal show={hideCreatePanel} cardsPack_id={cardsPack_id}/>
                     </div>

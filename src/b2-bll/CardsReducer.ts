@@ -127,20 +127,18 @@ export const GetCards = (cardsPack_id: string) => async (dispatch: Dispatch<Acti
 }
 
 
-export const CreateCard = (formData: any,reset:any): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+export const CreateCard = (formData: any, reset: any): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
     let token = restoreStateLocalStorage('authToken', '')
-debugger
+    debugger
     try {
         let res = await CardsAPI.createCards(token, formData)
         saveStateToLocalStorage(res.data.token, 'authToken')
         dispatch(GetCards(formData.cardsPack_id))
         reset()
-debugger
+        debugger
     } catch (e) {
 
     }
-
-
 
 
     // dispatch(toggleIsPending(true))
@@ -157,4 +155,16 @@ debugger
     //         }
     //     )
 
+}
+export const DeleteCard = (CardId: string, cardsPack_id: string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+    let token = restoreStateLocalStorage('authToken', '')
+    debugger
+    try {
+        let res = await CardsAPI.deleteCards(token, CardId)
+        saveStateToLocalStorage(res.data.token, 'authToken')
+        dispatch(GetCards(cardsPack_id))
+        debugger
+    } catch (e) {
+
+    }
 }
