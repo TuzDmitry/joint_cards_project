@@ -226,9 +226,9 @@ export const SearchPackCards = (searchText: string): ThunkType => async (dispatc
     dispatch(GetPacksCards())
 }
 
-export const SortPackCards = (direction: boolean): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+export const SortPackCards = (goal: string, direction: boolean): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
     debugger
-    dispatch(actions.SetSortParams('grade', direction))
+    dispatch(actions.SetSortParams(goal, direction))
     ///диспачим полученные настройки сортировки в бизнес и запускаем базовую санку
     dispatch(GetPacksCards())
 }

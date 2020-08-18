@@ -1,51 +1,20 @@
-import React, {useState} from 'react';
+import React from 'react';
+import {useDispatch} from 'react-redux';
 
+export const SortButton = (props: any) => {
 
-type PropsType={
-    arrayNum:Array<number>
-}
-export const SortButton = (props:any) => {
-    // const people: Array<string> = [
-    //     "Siri",
-    //     "Alexa",
-    //     "Google",
-    //     "Facebook",
-    //     "Twitter",
-    //     "Linkedin",
-    //     "Sinkedin",
-    //     "Zidan",
-    //     "Ronaldo",
-    //     "Henry",
-    //     "Messi"
-    // ];
-    // const years: Array<number> = [
-    //     888, 986, 11, 1939, 1240, 1648, 1750, 2020
-    // ]
+    let sortGoal = props.children.toLowerCase()
+    let cardsPack_id = props.cardsPack_id
 
-    //
-    // let y = {...years}
-    // const [number, setNumber] = useState(years);
-    // const [letter, setLetter] = useState([])
-
-    let innerArray;
-
-    const sortNumberByMinValue = () =>  {
-        // let minValueSort: any =  number.sort((a:number, b:number) => a - b);
-        // setNumber(minValueSort);
+    let dispatch = useDispatch()
+    let onGradeSortClick = (direction: boolean) => {
+        dispatch(props.thunk(sortGoal, direction, cardsPack_id))
     }
 
-
-
-    // let sortNumberByMaxValue = years.sort((a:number, b:number) => b - a)
-let b=innerArray?innerArray:props.ArrayNum
-    let a=b.map((n: any) => <div>{n}</div>)
-    debugger
     return (
-        <div>
-            {/*{minValueSort ? minValueSort : years }*/}
-            {a}
-            {/*{number}*/}
-            <button onClick={sortNumberByMinValue}>sort by min value</button>
+        <div className={'grade'}>{props.children}
+            <button onClick={() => onGradeSortClick(true)}>up</button>
+            <button onClick={() => onGradeSortClick(false)}>down</button>
         </div>
     )
 }

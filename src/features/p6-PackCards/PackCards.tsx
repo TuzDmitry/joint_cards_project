@@ -13,6 +13,7 @@ import {CardsPackType, PackType} from '../../b3-dal/api';
 import {FloatTable} from './floatTable/FloatTable';
 import {Paginator} from '../../b1-ui/common/paginator/Paginator';
 import {SearchInput} from '../../b1-ui/common/searcInput/SearchInput';
+import {SortButton} from '../../b1-ui/common/sortButton/SortButton';
 
 export const PackCards = () => {
     let usersPack = useSelector<AppStateType, Array<PackType>>(state => state.packCards.packs)
@@ -39,11 +40,6 @@ export const PackCards = () => {
     let [seachLS, changeSeachLS] = useState('')
     let dispatchThunk = () => dispatch(SearchPackCards(seachLS));
 
-
-    let onGradeSortClick = (direction: boolean) => {
-        dispatch(SortPackCards(direction))
-    }
-
     return (
         <div className={'PackCards'}>
             PACK CARDS SHOP
@@ -62,10 +58,7 @@ export const PackCards = () => {
                             <div>USER ID</div>
                             <div className={'name'}>Pack name</div>
                             <div>USER NAME</div>
-                            <div className={'grade'}>Grade
-                                <button onClick={() => onGradeSortClick(true)}>up</button>
-                                <button onClick={() => onGradeSortClick(false)}>down</button>
-                            </div>
+                            <SortButton thunk={SortPackCards}>Grade</SortButton>
                             <div>
                                 <button className={'butTable'} onClick={onShowHideClick}>add</button>
                             </div>

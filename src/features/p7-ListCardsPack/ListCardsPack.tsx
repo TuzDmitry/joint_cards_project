@@ -3,9 +3,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../b2-bll/store';
 import {Paginator} from '../../b1-ui/common/paginator/Paginator';
 import {useParams} from 'react-router-dom';
-import {CardType, GetCards, DeleteCard, SearchCards} from '../../b2-bll/CardsReducer';
+import {CardType, GetCards, DeleteCard, SearchCards, SortCards} from '../../b2-bll/CardsReducer';
 import {CreateFormModal} from './CreateFormModal';
 import {SearchInput} from '../../b1-ui/common/searcInput/SearchInput';
+import {SortButton} from '../../b1-ui/common/sortButton/SortButton';
 
 type PropsType =
     {
@@ -73,30 +74,13 @@ export const ListCardsPack = () => {
                 <SearchInput seachLS={seachLS} changeSeachLS={changeSeachLS} dispatchThunk={dispatchThunk}/>
             </header>
             <main>
-
-                {/*cards: [*/}
-                {/*{*/}
-                {/*    answer: "no answer"*/}
-                {/*    question: "no question"*/}
-                {/*    cardsPack_id: "5eb6a2f72f849402d46c6ac4"*/}
-                {/*    grade: 4.987525071790364*/}
-                {/*    rating: 0*/}
-                {/*    shots: 1*/}
-                {/*    type: "card"*/}
-                {/*    created: "2020-05-13T11:05:44.867Z"*/}
-                {/*    updated: "2020-05-13T11:05:44.867Z"*/}
-                {/*    __v: 0*/}
-                {/*    _id: "5ebbd48876810f1ad0e7ece3"*/}
-                {/*},*/}
-                {/*...*/}
-                {/*]*/}
                 <div className={'table'}>
                     <div className={'navTable'}>
                         <div className={'item'}>
                             <div>Question</div>
-                            <div className={'name'}>Rating</div>
-                            <div>Shots</div>
-                            <div className={'grade'}>Grade</div>
+                            <SortButton cardsPack_id={cardsPack_id} thunk={SortCards}>Rating</SortButton>
+                            <SortButton cardsPack_id={cardsPack_id} thunk={SortCards}>Shots</SortButton>
+                            <SortButton cardsPack_id={cardsPack_id} thunk={SortCards}>Grade</SortButton>
                             <div>
                                 <button className={'butTable'}>LEARN</button>
                             </div>
@@ -109,16 +93,11 @@ export const ListCardsPack = () => {
                     </div>
                     <div
                         className={!hideCreatePanel ? 'itemFormContainer itemFormContainer-show' : 'itemFormContainer'}>
-                        {/*<FloatTable onAddClick={onAddClick} changeHide={changeHide}/>*/}
                         <CreateFormModal show={hideCreatePanel} cardsPack_id={cardsPack_id}/>
                     </div>
 
                     <div className={'itemsContainer'}>
                         {ListCards}
-                        {/*<CardItem/>*/}
-                        {/*<CardItem/>*/}
-                        {/*<CardItem/>*/}
-                        {/*<CardItem/>*/}
                     </div>
 
                 </div>
