@@ -106,7 +106,7 @@ export const Autorization = () => {
         let token = restoreStateLocalStorage('authToken', '')
 
         try {
-            debugger
+            // debugger
             let res = await jointCardsApi.checkAuth(token)
             ////сохраняем полученный токен в сторадж
             saveStateToLocalStorage(res.data.token, 'authToken')
@@ -115,7 +115,7 @@ export const Autorization = () => {
 
         } catch (e) {
             let errorText = e.response.data.error;
-            debugger
+            // debugger
             alert(errorText)
         }
     }

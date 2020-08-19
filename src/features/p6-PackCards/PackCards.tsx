@@ -17,11 +17,12 @@ import {SortButton} from '../../b1-ui/common/sortButton/SortButton';
 
 export const PackCards = () => {
     let usersPack = useSelector<AppStateType, Array<PackType>>(state => state.packCards.packs)
+
+    let isAuth = useSelector<AppStateType, boolean>(state => state.loginPage.isAuth)
     let dispatch = useDispatch()
     useEffect(() => {
-        dispatch(GetPacksCards());
-        // console.log('перерисовка списка колод')
-    }, [])
+        if (isAuth) dispatch(GetPacksCards());
+    }, [isAuth])
 
 
     let [hideItemPanel, changeHide] = useState(true)
