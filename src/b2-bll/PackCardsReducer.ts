@@ -133,7 +133,7 @@ export const GetPacksCards = () => async (dispatch: Dispatch<ActionType>, getSta
             user_id: getState().packCards.user_id
         }
         let res = await PacksCardsAPI.getPacksWithCards(token, obj)
-        debugger
+        // debugger
         ////сохраняем полученный токен в сторадж
         saveStateToLocalStorage(res.data.token, 'authToken')
         dispatch(actions.SetPackCards(res.data.cardPacks));

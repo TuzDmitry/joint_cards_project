@@ -1,5 +1,7 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
+import arrow from '../../../assets/images/arrow.png'
+import './SortButton.scss'
 
 export const SortButton = (props: any) => {
 
@@ -12,9 +14,12 @@ export const SortButton = (props: any) => {
     }
 
     return (
-        <div className={'grade'}>{props.children}
-            <button onClick={() => onGradeSortClick(true)}>up</button>
-            <button onClick={() => onGradeSortClick(false)}>down</button>
+        <div className={'grade'}>
+            <div>{props.children}</div>
+            <div className='arrowConrtainer'>
+                <img className='arrowUp' src={arrow} onClick={() => onGradeSortClick(true)}/>
+                <img className='arrowDown' src={arrow} onClick={() => onGradeSortClick(false)}/>
+            </div>
         </div>
     )
 }
