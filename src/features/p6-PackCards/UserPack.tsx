@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import './PackCards.scss'
-import { PackType} from '../../b3-dal/api';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppStateType} from '../../b2-bll/store';
 import {DeletePackCards, UpdatePackCards,} from '../../b2-bll/PackCardsReducer';
 import {NavLink} from 'react-router-dom';
 import {UpdateTable} from './floatUpdateTable/UpdateTable';
-import {actions} from '../../b2-bll/TableReducer';
+import {PackType, PropsUpdatePackType} from '../../b1-ui/common/utils/types';
 
 type PropsType =
     {
@@ -28,13 +27,13 @@ export const UserPack = (props: PropsType) => {
     }
 
     let onUpdateClick=()=>{
-        dispatch(actions.SetParams(props.item))
+        // dispatch(actions.SetParams(props.item))
         hideUpdatePanel(!updatePanel)
     }
 
-    let onPressUpdateButton=()=>{
+    let onPressUpdateButton=(data:PropsUpdatePackType)=>{
         hideUpdatePanel(!updatePanel)
-        dispatch(UpdatePackCards())
+        dispatch(UpdatePackCards(data))
     }
 
     return (
@@ -54,7 +53,7 @@ export const UserPack = (props: PropsType) => {
             <div><a href="">Learn cards</a></div>
 
             <div className={!updatePanel ? 'itemFormContainer itemFormContainer-show' : 'itemFormContainer'}>
-                <UpdateTable onUpdateClick={onPressUpdateButton} hideUpdatePanel={hideUpdatePanel}/>
+                <UpdateTable item={props.item} onUpdateClick={onPressUpdateButton} hideUpdatePanel={hideUpdatePanel}/>
             </div>
 
         </div>

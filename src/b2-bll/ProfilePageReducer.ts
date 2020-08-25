@@ -1,6 +1,6 @@
 import {AppStateType, InferActionTypes} from './store';
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
-import {FormDataType} from '../features/p5-ProfilePage/SetNewPassword';
+import {FormDataType} from '../b1-ui/common/TemplateFormComponent/TemplateForm';
 import {restoreStateLocalStorage, saveStateToLocalStorage} from '../b1-ui/common/utils/LocalStorage';
 import {jointCardsApi} from '../b3-dal/api';
 
@@ -40,17 +40,17 @@ const actions = {
 }
 
 
-export const UpdatePassword = (formData: FormDataType): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
-    debugger
-
-    let token = restoreStateLocalStorage('authToken', '')
-    try {
-        let res = await jointCardsApi.updatePassword(token, formData )
-        debugger
-        saveStateToLocalStorage(res.data.token, 'authToken')
-        alert(res.data.success)
-    }
-   catch (e) {
-
-   }
-}
+// export const UpdatePassword = (formData: FormDataType): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+//     debugger
+//
+//     let token = restoreStateLocalStorage('authToken', '')
+//     try {
+//         let res = await jointCardsApi.updatePassword(token, formData )
+//         debugger
+//         saveStateToLocalStorage(res.data.token, 'authToken')
+//         alert(res.data.success)
+//     }
+//    catch (e) {
+//
+//    }
+// }

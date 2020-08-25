@@ -1,49 +1,52 @@
 import React, {useState} from 'react';
 import './../floatTable/FloatTable.scss'
 import {ItemTable} from '../floatTable/ItemTable';
-import {useDispatch, useSelector} from 'react-redux';
-import {AppStateType} from '../../../b2-bll/store';
-import {actions, ParamsTableType} from '../../../b2-bll/TableReducer';
+import {PackType, PropsUpdatePackType} from '../../../b1-ui/common/utils/types';
 
-export const UpdateTable = (props: any) => {
+
+type PropsType={
+    item:PackType
+    onUpdateClick: (data:PropsUpdatePackType)=>void
+    hideUpdatePanel:(hide:boolean)=>void
+}
+
+export const UpdateTable = (props: PropsType) => {
 
     let onUpdateClick = () => {
-        props.onUpdateClick()
+        props.onUpdateClick({
+            grade: gradeValue,
+            name: nameValue,
+            path: pathValue,
+            private: privateValue,
+            rating: ratingValue,
+            shots: shotsValue,
+            type: typeValue,
+            _id: props.item._id,
+        })
         props.hideUpdatePanel(true)
     }
 
-    let {name, path, grade, shots, rating, deckCover, private:privat, type}=useSelector<AppStateType, ParamsTableType>(state => state.tableParams)
-
-    // let [nameValue, changeNameValue] = useState('No Name')
-    let changeNameValue=(nameV:string)=>dispatch(actions.SetParamName(nameV))
+    let [nameValue, changeNameValue] = useState(props.item.name)
     let [nameEditMode, switchNameEditMode] = useState(false)
 
-    // let [pathValue, changePathValue] = useState('')
-    let changePathValue=(pathV:string)=>dispatch(actions.SetParamPath(pathV))
+    let [pathValue, changePathValue] = useState(props.item.path)
     let [pathEditMode, switchPathEditMode] = useState(false)
 
-    // let [gradeValue, changeGradeValue] = useState(0)
-    let changeGradeValue=(gradeV:number)=>dispatch(actions.SetParamGrade(gradeV))
+    let [gradeValue, changeGradeValue] = useState(props.item.grade)
     let [gradeEditMode, switchGradeEditMode] = useState(false)
 
-    // let [shotsValue, changeShotsValue] = useState(0)
-    let changeShotsValue=(shotsV:number)=>dispatch(actions.SetParamShots(shotsV))
+    let [shotsValue, changeShotsValue] = useState(props.item.shots)
     let [shotsEditMode, switchShotsEditMode] = useState(false)
 
-    // let [ratingValue, changeRatingValue] = useState(0)
-    let changeRatingValue=(ratingV:number)=>dispatch(actions.SetParamRating(ratingV))
+    let [ratingValue, changeRatingValue] = useState(props.item.rating)
     let [ratingEditMode, switchRatingEditMode] = useState(false)
 
-
-    // let [privateValue, changePrivateValue] = useState(false)
-    let changePrivateValue=(privateV:boolean)=>dispatch(actions.SetParamPrivate(privateV))
+    let [privateValue, changePrivateValue] = useState(props.item.private)
     let [privateEditMode, switchPrivateEditMode] = useState(false)
 
-    // let [typeValue, changeTypeValue] = useState('pack')
-    let changeTypeValue=(typeV:string)=>dispatch(actions.SetParamType(typeV))
+    let [typeValue, changeTypeValue] = useState(props.item.type)
     let [typeEditMode, switchTypeEditMode] = useState(false)
 
-let dispatch=useDispatch()
     return (
         <>
             <div className={'addItemForm '}>
@@ -54,30 +57,29 @@ let dispatch=useDispatch()
                     <td>grade:</td>
                     <td>shots:</td>
                     <td>rating:</td>
-                    <td>deckCover:</td>
                     <td>private:</td>
                     <td>type:</td>
                 </tr>
                 <tr className={'custom-row'}>
-                    <ItemTable itemValue={name} changeItemValue={changeNameValue} type={'text'}
+                    <ItemTable itemValue={nameValue} changeItemValue={changeNameValue} type={'text'}
                                itemEditMode={nameEditMode} switchItemEditMode={switchNameEditMode}/>
 
-                    <ItemTable itemValue={path} changeItemValue={changePathValue} type={'text'}
+                    <ItemTable itemValue={pathValue} changeItemValue={changePathValue} type={'text'}
                                itemEditMode={pathEditMode} switchItemEditMode={switchPathEditMode}/>
 
-                    <ItemTable itemValue={grade} changeItemValue={changeGradeValue} type={'number'}
+                    <ItemTable itemValue={gradeValue} changeItemValue={changeGradeValue} type={'number'}
                                itemEditMode={gradeEditMode} switchItemEditMode={switchGradeEditMode}/>
 
-                    <ItemTable itemValue={shots} changeItemValue={changeShotsValue} type={'number'}
+                    <ItemTable itemValue={shotsValue} changeItemValue={changeShotsValue} type={'number'}
                                itemEditMode={shotsEditMode} switchItemEditMode={switchShotsEditMode}/>
 
-                    <ItemTable itemValue={rating} changeItemValue={changeRatingValue} type={'number'}
+                    <ItemTable itemValue={ratingValue} changeItemValue={changeRatingValue} type={'number'}
                                itemEditMode={ratingEditMode} switchItemEditMode={switchRatingEditMode}/>
 
-                    <ItemTable itemValue={privat} changeItemValue={changePrivateValue} type={'checkbox'}
+                    <ItemTable itemValue={privateValue} changeItemValue={changePrivateValue} type={'checkbox'}
                                itemEditMode={privateEditMode} switchItemEditMode={switchPrivateEditMode}/>
 
-                    <ItemTable itemValue={type} changeItemValue={changeTypeValue} type={'text'}
+                    <ItemTable itemValue={typeValue} changeItemValue={changeTypeValue} type={'text'}
                                itemEditMode={typeEditMode} switchItemEditMode={switchTypeEditMode}/>
                 </tr>
                 </tbody>

@@ -30,7 +30,7 @@ const App = () => {
                     <Route path={'/login'} component={LoginPage}/>
                     <Route path={'/registration'} component={RegPage}/>
                     <Route path={'/recovery-password'} component={RecoveryPage}/>
-                    <Route path={'/change-password'} component={ChangePasswordPage}/>
+                    <Route path={'/change-password/:resetToken?'} render={() =><ChangePasswordPage/>}/>
                     <Route path={'/profile'} component={ProfilePage}/>
                     <Route path={'/pack-cards'} component={PackCards}/>
                     <Route path={'/list-cards-pack/:id?'} render={() => <ListCardsPack/>}/>

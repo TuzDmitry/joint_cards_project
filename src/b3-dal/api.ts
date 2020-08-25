@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {ParamsTableType} from '../b2-bll/TableReducer';
-import {FormDataType} from '../features/p5-ProfilePage/SetNewPassword';
+import {FormDataType} from '../b1-ui/common/TemplateFormComponent/TemplateForm';
+import {CardsPackType, PackType, PropsUpdatePackType, QueryGetParamsType} from '../b1-ui/common/utils/types';
 
 
 const instance = axios.create({
@@ -8,14 +9,14 @@ const instance = axios.create({
     baseURL: 'http://localhost:7542/1.0/'
 })
 
-export type UserDataType = {
+type UserDataType = {
     email: string
     password: string,
     rememberMe?: boolean
     success: boolean
 }
 
-export type LoginType = {
+type LoginType = {
     email: string
     name: string
     token: string
@@ -23,6 +24,15 @@ export type LoginType = {
     _id: string
     publicCardPacksCount: number
 }
+
+type RecoveryType = {
+    html: string
+    info: any
+    status: string
+    success: boolean
+}
+
+
 export const jointCardsApi = {
     setUserData(email: string, password: string) {
         return instance.post<UserDataType>('auth/register', {email, password})
@@ -36,62 +46,53 @@ export const jointCardsApi = {
         return instance.post<LoginType>('auth/me', {token})
 
     },
-    updatePassword(resetPasswordToken: string, formData: FormDataType) {
-        debugger
-        return instance.post<any>('auth/set-new-password',
+    recoveryPassword(email: string) {
+        return instance.post<RecoveryType>('auth/forgot',
             {
-                resetPasswordToken,
-            password: formData.newPassword
-        }
-    )
+                email: email,
+                html1: '<a href=\'http://localhost:3000/#/change-password/',
+                html2: '\'>reset-password-link</a>'
+            }
+        )
+    },
+    updatePassword(formData: FormDataType) {
+        return instance.post<{ success: boolean }>('auth/set-new-password',
+            {
+                resetPasswordToken: formData.reset_Token,
+                password: formData.newPassword
+            }
+        )
     }
 }
 
-export type PackType = {
-    cardsCount: number
-    created: string
-    grade: number
-    name: string
-    path: string
-    private: boolean
-    rating: number
-    shots: number
-    type: string
-    updated: string
-    user_id: string
-    user_name: string
-    __v: number
-    _id: string
 
+type GetPackCardsResponseType = {
+    cardPacks: Array<PackType>
+    cardPacksTotalCount: number
+    maxGrade: number
+    minGrade: number
+    page: number
+    pageCount: number
+    token: string
+    tokenDeathTime: number
 }
 
-export type CardsPackType = {
-    name?: string
-    path?: string
-    grade?: number
-    shots?: number
-    rating?: number
-    deckCover?: string
-    private?: boolean
-    type?: string
+type AddPackCardsResponseType = {
+    newCardsPack: PackType
+    success: boolean
+    token: string
+    tokenDeathTime: number
 }
 
-
-export type QueryGetParamsType = {
-    packName: string | undefined
-    min: number | undefined
-    max: number | undefined
-    sortPacks: {
-        goal: string | undefined, up: boolean
-    }
-    page: number | undefined
-    pageCount: number | undefined
-    user_id: string | undefined
+type DeletePackCardsResponseType = {
+    deletedCardsPack: PackType
+    success: boolean
+    token: string
+    tokenDeathTime: number
 }
-
 
 export const PacksCardsAPI = {
-    getPacksWithCards(token: string, params: any = {}) {
+    getPacksWithCards(token: string, params: QueryGetParamsType) {
         let {packName, min, max, sortPacks, page, pageCount, user_id} = params;
 
         let id = user_id ? `&user_id=${user_id}` : ''
@@ -105,20 +106,20 @@ export const PacksCardsAPI = {
         let minVal = min ? `&min=${min}` : ''
         let search = packName ? `&packName=${packName}` : ''
 
-        return instance.get<any>(`cards/pack?token=${token}${search}${minVal}${maxVal}${sortGoal}${pageNum}${elsOnPage}${id}`)
+        return instance.get<GetPackCardsResponseType>(`cards/pack?token=${token}${search}${minVal}${maxVal}${sortGoal}${pageNum}${elsOnPage}${id}`)
     },
 
     addPackWithCards(cardsPack: CardsPackType, token: string) {
-        return instance.post<any>(`cards/pack`,
+        return instance.post<AddPackCardsResponseType>(`cards/pack`,
             {cardsPack, token}
         )
     },
 
     delPackWithCards(token: string, id_pack: string) {
-        return instance.delete<any>(`cards/pack?token=${token}&id=${id_pack}`)
+        return instance.delete<DeletePackCardsResponseType>(`cards/pack?token=${token}&id=${id_pack}`)
     },
-    updatePackWithCards(params: ParamsTableType, token: string) {
-
+    updatePackWithCards(params: PropsUpdatePackType, token: string) {
+        debugger
         return instance.put<any>(`cards/pack`,
             {
                 cardsPack: params,
@@ -145,7 +146,7 @@ export const CardsAPI = {
         let maxVal = max ? `&max=${max}` : ''
         let minVal = min ? `&min=${min}` : ''
         let search = cardQuestion ? `&cardQuestion=${cardQuestion}` : ''
-debugger
+        debugger
         return instance.get<any>(`cards/card?token=${token}${search}${minVal}${maxVal}${sortGoal}${pageNum}${elsOnPage}${id}`)
     },
 
@@ -155,7 +156,7 @@ debugger
     createCards(token: string, formData: any) {
         return instance.post<any>(`cards/card`,
             {
-                card:formData,
+                card: formData,
                 token
             })
     },

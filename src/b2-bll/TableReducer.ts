@@ -1,7 +1,8 @@
 import {AppStateType, InferActionTypes} from './store';
 import {Dispatch} from 'redux';
 import {restoreStateLocalStorage, saveStateToLocalStorage} from '../b1-ui/common/utils/LocalStorage';
-import {CardsAPI, PackType} from '../b3-dal/api';
+import {CardsAPI} from '../b3-dal/api';
+import { PackType } from '../b1-ui/common/utils/types';
 
 const SET_TABLE_PARAMS = 'joint_cards/TableReducer/SET_TABLE_PARAMS';
 const CLEAR_TABLE_PARAMS = 'joint_cards/TableReducer/CLEAR_TABLE_PARAMS';

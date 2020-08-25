@@ -2,8 +2,7 @@ import {applyMiddleware, combineReducers, createStore} from "redux";
 import thunk from "redux-thunk";
 import {loginPageReducer} from "./LoginPageReducer";
 import {regPageReducer} from "./RegPageReducer";
-import {recoveryPageReducer} from "./RecoveryPageReducer";
-import {changePasswordPageReducer} from "./ChangePasswordPageReducer";
+import {recoveryReducer} from "./RecoveryReducer";
 import {profilePageReducer} from "./ProfilePageReducer";
 import {searchReducer} from "./SearchReducer";
 import { packCardsReducer } from "./PackCardsReducer";
@@ -15,8 +14,7 @@ export type InferActionTypes<T> = T extends { [keys: string]: (...args: any[]) =
 const rootReducer = combineReducers({
     loginPage: loginPageReducer,
     regPage: regPageReducer,
-    recoveryPage: recoveryPageReducer,
-    changePasswordPage: changePasswordPageReducer,
+    recoveryPage: recoveryReducer,
     profilePage: profilePageReducer,
     packCards: packCardsReducer,
     searchLayer: searchReducer,

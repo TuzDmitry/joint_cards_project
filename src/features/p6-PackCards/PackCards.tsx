@@ -9,11 +9,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import './PackCards.scss'
 import {UserPack} from './UserPack';
 import {AppStateType} from '../../b2-bll/store';
-import {CardsPackType, PackType} from '../../b3-dal/api';
 import {FloatTable} from './floatTable/FloatTable';
 import {Paginator} from '../../b1-ui/common/paginator/Paginator';
 import {SearchInput} from '../../b1-ui/common/searcInput/SearchInput';
 import {SortButton} from '../../b1-ui/common/sortButton/SortButton';
+import {CardsPackType, PackType} from '../../b1-ui/common/utils/types';
 
 export const PackCards = () => {
     let usersPack = useSelector<AppStateType, Array<PackType>>(state => state.packCards.packs)

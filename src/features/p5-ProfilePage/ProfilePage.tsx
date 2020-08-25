@@ -3,8 +3,6 @@ import {useSelector} from 'react-redux';
 import {AppStateType} from '../../b2-bll/store';
 import {Redirect} from 'react-router-dom';
 import './ProfilePage.scss'
-import {minLength1, minLength7} from '../../b1-ui/common/utils/validators';
-import {SetNewPassword} from './SetNewPassword';
 
 export const ProfilePage = () => {
     let {isAuth, email, name, publicCardPacksCount, _id} = useSelector<AppStateType, any>(state => state.loginPage)
