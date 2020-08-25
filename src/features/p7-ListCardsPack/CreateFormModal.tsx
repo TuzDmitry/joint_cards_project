@@ -25,17 +25,6 @@ let onResetClick=()=>{
 }
 
     return (
-        //     cardsPack_id: "5eb543f6bea3ad21480f1ee7"
-        // question: "no question" // если не отправить будет таким
-        // answer: "no answer" // если не отправить будет таким
-        // grade: 0 // не обязателен
-        // shots: 0 // не обязателен
-        // rating: 0 // не обязателен
-        // answerImg: "url or base 64" // не обязателен
-        // questionImg: "url or base 64" // не обязателен
-        // questionVideo: "url or base 64" // не обязателен
-        // answerVideo: "url or base 64" // не обязателен
-        // type: "card" // если не отправить будет таким
         <div className={!props.show?'modelForm show':'modelForm'}>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <input name="question"

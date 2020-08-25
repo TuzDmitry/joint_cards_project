@@ -67,8 +67,8 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Act
     }
 }
 
-type ActionType = InferActionTypes<typeof actions>;
-type ThunkType = ThunkAction<void, AppStateType, unknown, ActionType>;
+ type ActionType = InferActionTypes<typeof actions>;
+ type ThunkType = ThunkAction<void, AppStateType, unknown, ActionType>;
 
 export type CardType = {
     answer: string
@@ -175,21 +175,6 @@ export const UpdateCards = (cardPackId:any, formData:any): ThunkType => {
         let token = restoreStateLocalStorage('authToken', '')
 
         try {
-            // let cardObj = {
-            //     question: getState().
-            // }
-
-            // let obj = {
-            //     _id: getState().tableParams._id,
-            //     name: getState().tableParams.name,
-            //     path: getState().tableParams.path,
-            //     grade: getState().tableParams.grade,
-            //     deckCover: getState().tableParams.deckCover,
-            //     shots: getState().tableParams.shots,
-            //     rating: getState().tableParams.rating,
-            //     private: getState().tableParams.private,
-            //     type: getState().tableParams.type,
-            // }
             let res = await CardsAPI.updateCards(formData, token)
             saveStateToLocalStorage(res.data.token, 'authToken')
             dispatch(GetCards(cardPackId))

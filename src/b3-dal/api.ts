@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {ParamsTableType} from '../b2-bll/TableReducer';
+import {FormDataType} from '../features/p5-ProfilePage/SetNewPassword';
 
 
 const instance = axios.create({
@@ -34,6 +35,15 @@ export const jointCardsApi = {
     checkAuth(token: string) {
         return instance.post<LoginType>('auth/me', {token})
 
+    },
+    updatePassword(resetPasswordToken: string, formData: FormDataType) {
+        debugger
+        return instance.post<any>('auth/set-new-password',
+            {
+                resetPasswordToken,
+            password: formData.newPassword
+        }
+    )
     }
 }
 

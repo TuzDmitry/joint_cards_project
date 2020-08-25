@@ -19,7 +19,7 @@ export const LoginPage = () => {
 
     let [email, changeEmail] = useState('')
     let [password, changePassword] = useState('')
-    let [rememberMe, changeRemember] = useState(false)
+    let [rememberMe, changeRemember] = useState<boolean>(false)
 
     const dispatch = useDispatch()
 
