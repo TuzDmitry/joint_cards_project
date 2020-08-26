@@ -80,25 +80,11 @@ type GetPackCardsResponseType = {
     tokenDeathTime: number
 }
 
-type AddPackCardsResponseType = {
-    newCardsPack: PackType
-    success: boolean
-    token: string
-    tokenDeathTime: number
-}
-
-type DeletePackCardsResponseType = {
-    deletedCardsPack: PackType
-    success: boolean
-    token: string
-    tokenDeathTime: number
-}
-
-type UpdatePackCardsResponseType = {
+type CommonPackCardsResponseType<T> = {
+    T: PackType
     success: boolean,
     token: string,
     tokenDeathTime: number,
-    updatedCardsPack: PackType
 }
 
 export const PacksCardsAPI = {
@@ -120,17 +106,17 @@ export const PacksCardsAPI = {
     },
 
     addPackWithCards(cardsPack: CardsPackType, token: string) {
-        return instance.post<AddPackCardsResponseType>(`cards/pack`,
+        return instance.post<CommonPackCardsResponseType<{newCardsPack: PackType}>>(`cards/pack`,
             {cardsPack, token}
         )
     },
 
     delPackWithCards(token: string, id_pack: string) {
-        return instance.delete<DeletePackCardsResponseType>(`cards/pack?token=${token}&id=${id_pack}`)
+        return instance.delete<CommonPackCardsResponseType<{deletedCardsPack: PackType}>>(`cards/pack?token=${token}&id=${id_pack}`)
     },
     updatePackWithCards(params: PropsUpdatePackType, token: string) {
         debugger
-        return instance.put<UpdatePackCardsResponseType>(`cards/pack`,
+        return instance.put<CommonPackCardsResponseType<{updatedCardsPack: PackType}>>(`cards/pack`,
             {
                 cardsPack: params,
                 token
@@ -165,25 +151,13 @@ type ChoisedCardsPackType = {
     token: string
     tokenDeathTime: number
 }
-type AddCardsResponseType ={
-    newCard: CardType
-    success: boolean,
-    token: string,
-    tokenDeathTime: number,
-}
-type UpdateCardsResponseType ={
-    updatedCard: CardType
-    success: boolean,
-    token: string,
-    tokenDeathTime: number,
-}
-type DeleteCardsResponseType ={
-    deletedCard: CardType
-    success: boolean,
-    token: string,
-    tokenDeathTime: number,
-}
 
+type CommonCardResponseType<T> = {
+    T: CardType
+    success: boolean,
+    token: string,
+    tokenDeathTime: number,
+}
 
 
 export const CardsAPI = {
@@ -204,7 +178,7 @@ export const CardsAPI = {
         return instance.get<ChoisedCardsPackType>(`cards/card?token=${token}${search}${minVal}${maxVal}${sortGoal}${pageNum}${elsOnPage}${id}`)
     },
     createCards(token: string, formData: DataFormCardType) {
-        return instance.post<AddCardsResponseType>(`cards/card`,
+        return instance.post<CommonCardResponseType<{newCard: CardType}>>(`cards/card`,
             {
                 card: formData,
                 token
@@ -212,14 +186,14 @@ export const CardsAPI = {
     },
     updateCards(formData: DataFormCardType, token: string) {
         debugger
-        return instance.put<UpdateCardsResponseType>(`cards/card`,
+        return instance.put<CommonCardResponseType<{updatedCard: CardType}>>(`cards/card`,
             {
                 card: formData,
                 token
             })
     },
     deleteCards(token: string, CardId: string) {
-        return instance.delete<DeleteCardsResponseType>(`cards/card?token=${token}&id=${CardId}`)
+        return instance.delete<CommonCardResponseType<{deletedCard: CardType}>>(`cards/card?token=${token}&id=${CardId}`)
     }
 
 }
