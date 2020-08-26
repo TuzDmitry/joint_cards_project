@@ -1,9 +1,11 @@
 import React from 'react';
-import {useForm} from 'react-hook-form';
+import {SubmitHandler, useForm} from 'react-hook-form';
 import {minLength1, minLength7} from '../../b1-ui/common/utils/validators';
 import './CreateFormModal.scss'
 import {CreateCard} from '../../b2-bll/CardsReducer';
 import {useDispatch} from 'react-redux';
+import {DataFormCardType} from '../../b1-ui/common/utils/types';
+
 
 type PropsType={
     cardsPack_id:string
@@ -12,9 +14,9 @@ type PropsType={
 
 export const CreateFormModal = (props:PropsType) => {
 const dispatch=useDispatch()
-    const {handleSubmit, register, errors, reset} = useForm();
+    const {handleSubmit, register, errors, reset} = useForm<DataFormCardType>();
 
-    const onSubmit = (formData:any) => {
+        const onSubmit = (formData: DataFormCardType ) => {
         debugger
         console.log(formData);
         dispatch(CreateCard({cardsPack_id:props.cardsPack_id,  ...formData},reset))
@@ -74,7 +76,7 @@ let onResetClick=()=>{
                 <div style={{width:"100px", height:"50px", backgroundColor: 'red'}}>
 
                     <input type="button" onClick={onResetClick} />
-                    <button onClick={reset} >RESET</button>
+                    <button onClick={()=>reset} >RESET</button>
                 </div>
 
                 <div>

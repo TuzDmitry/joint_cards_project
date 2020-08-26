@@ -148,10 +148,10 @@ export const GetCards = (cardsPack_id: string) => async (dispatch: Dispatch<Acti
             pageCount: getState().listCardsPack.pageCount, // не обязательно
         }
         // let res = await CardsAPI.getCards(token, obj)
-        let res = await CardsAPI.getCards(token, cardsPack_id)
+        // let res = await CardsAPI.getCards(token, cardsPack_id)
         debugger
         ////сохраняем полученный токен в сторадж
-        saveStateToLocalStorage(res.data.token, 'authToken')
+        // saveStateToLocalStorage(res.data.token, 'authToken')
         ////устанавливаем успешно-полученные данные
         // dispatch(actions.SetPackCardsTotalCount(res.data.cardPacksTotalCount));
     } catch (e) {

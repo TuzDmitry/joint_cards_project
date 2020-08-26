@@ -5,8 +5,8 @@ import {restoreStateLocalStorage, saveStateToLocalStorage} from '../b1-ui/common
 
 const AUTH_SUCCESS = 'joint_cards/LoginPageReducer/AUTH_SUCCESS';
 const AUTH_FAILED = 'joint_cards/LoginPageReducer/AUTH_FAILED';
-const IN_PROGRESS = 'joint_cards/LoginPageReducer/IN_PROGRESS'
-
+const IN_PROGRESS = 'joint_cards/LoginPageReducer/IN_PROGRESS';
+const LOG_OUT = 'joint_cards/LoginPageReducer/LOG_OUT'
 
 let initialState = {
     email: '',
@@ -37,6 +37,8 @@ export const loginPageReducer = (state: InitialStateType = initialState, action:
             return {...state, error: action.error}
         case IN_PROGRESS:
             return {...state, inProgress: action.inProgress}
+        case LOG_OUT:
+            return {...state, isAuth: false}
         default:
             return state
     }
@@ -73,6 +75,11 @@ const actions = {
         return (
             {type: IN_PROGRESS, inProgress} as const
         )
+    },
+    LogOut: () => {
+        return (
+            {type: LOG_OUT} as const
+        )
     }
 }
 
@@ -99,6 +106,12 @@ export const LogIn = (mail: string, password: string, rememberMe: boolean) => {
     }
 }
 
+export const LogOut = () => {
+    return (dispatch: Dispatch<ActionType>) => {
+        localStorage.removeItem('authToken')
+        dispatch(actions.LogOut())
+    }
+}
 
 export const Autorization = () => {
     return async (dispatch: Dispatch<ActionType>, getState: () => AppStateType) => {

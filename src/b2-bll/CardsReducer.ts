@@ -3,7 +3,7 @@ import {Dispatch} from 'redux';
 import {restoreStateLocalStorage, saveStateToLocalStorage} from '../b1-ui/common/utils/LocalStorage';
 import {CardsAPI, PacksCardsAPI} from '../b3-dal/api';
 import {ThunkAction, ThunkDispatch} from 'redux-thunk';
-import {GetPacksCards} from './PackCardsReducer';
+import {DataFormCardType} from '../b1-ui/common/utils/types';
 
 const SET_CARDS = 'joint_cards/CardsReducer/SET_CARDS';
 const SET_SEARCH_TEXT = 'joint_cards/CardsReducer/SET_SEARCH_TEXT';
@@ -45,9 +45,6 @@ export type InitialStateType = {
     pageCount: number
 }
 
-// export type InitialStateType = typeof initialState
-
-
 export const cardsReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
     switch (action.type) {
         case SET_CARDS:
@@ -67,8 +64,8 @@ export const cardsReducer = (state: InitialStateType = initialState, action: Act
     }
 }
 
- type ActionType = InferActionTypes<typeof actions>;
- type ThunkType = ThunkAction<void, AppStateType, unknown, ActionType>;
+type ActionType = InferActionTypes<typeof actions>;
+type ThunkType = ThunkAction<void, AppStateType, unknown, ActionType>;
 
 export type CardType = {
     answer: string
@@ -99,7 +96,8 @@ const actions = {
     }
 }
 
-export const GetCards = (cardsPack_id: string) => async (dispatch: Dispatch<ActionType>, getState: () => AppStateType) => {
+
+export const GetCards = (cardsPack_id: string | undefined) => async (dispatch: Dispatch<ActionType>, getState: () => AppStateType) => {
 
     let token = restoreStateLocalStorage('authToken', '')
     try {
@@ -133,44 +131,23 @@ export const SearchCards = (cardsPack_id: string, searchText: string): ThunkType
     dispatch(GetCards(cardsPack_id))
 }
 
-export const CreateCard = (formData: any, reset: any): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+export const CreateCard = (formData: DataFormCardType, reset: ()=> void): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
     let token = restoreStateLocalStorage('authToken', '')
-    debugger
     try {
         let res = await CardsAPI.createCards(token, formData)
+
         saveStateToLocalStorage(res.data.token, 'authToken')
         dispatch(GetCards(formData.cardsPack_id))
         reset()
-        debugger
     } catch (e) {
 
     }
 
 
-    // dispatch(toggleIsPending(true))
-    // postForm(formData)
-    //     .then((res) => {
-    //             dispatch(toggleIsPending(false))
-    //
-    //             if (res.status===200) {
-    //                 dispatch(reset('feedback'))
-    //                 alert(res.data)
-    //             } else {
-    //                 alert(res)
-    //             }
-    //         }
-    //     )
-
 }
 
 
-//     question: string
-//     grade: number
-//     rating: number
-//     shots: number
-
-
-export const UpdateCards = (cardPackId:any, formData:any): ThunkType => {
+export const UpdateCards = (cardPackId: string, formData: DataFormCardType): ThunkType => {
     return async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
         let token = restoreStateLocalStorage('authToken', '')
 
@@ -186,12 +163,11 @@ export const UpdateCards = (cardPackId:any, formData:any): ThunkType => {
 }
 
 
-
 export const DeleteCard = (CardId: string, cardsPack_id: string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
     let token = restoreStateLocalStorage('authToken', '')
-    debugger
     try {
         let res = await CardsAPI.deleteCards(token, CardId)
+        debugger
         saveStateToLocalStorage(res.data.token, 'authToken')
         dispatch(GetCards(cardsPack_id))
         debugger
@@ -199,7 +175,7 @@ export const DeleteCard = (CardId: string, cardsPack_id: string): ThunkType => a
 
     }
 }
-export const SortCards = (goal: string, direction: boolean, cardsPack_id:string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
+export const SortCards = (goal: string, direction: boolean, cardsPack_id: string): ThunkType => async (dispatch: ThunkDispatch<AppStateType, unknown, ActionType>, getState: () => AppStateType) => {
     debugger
 
     dispatch(actions.SetSortParams(goal, direction))

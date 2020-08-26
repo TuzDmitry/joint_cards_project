@@ -3,6 +3,7 @@ import {CardType, CreateCard, DeleteCard, UpdateCards} from '../../../b2-bll/Car
 import React, {useState, ChangeEvent} from 'react';
 import {useForm} from 'react-hook-form';
 import {minLength1, minLength7} from '../../../b1-ui/common/utils/validators';
+import {DataFormCardType} from '../../../b1-ui/common/utils/types';
 
 type PropsType={
     onChangeClick: () => void
@@ -13,9 +14,9 @@ type PropsType={
 
 export const ChangeFormModal = (props:PropsType) => {
     const dispatch=useDispatch()
-    const {handleSubmit, register, errors, reset} = useForm();
+    const {handleSubmit, register, errors, reset} = useForm<DataFormCardType>();
 
-    const onSubmit = (formData:any) => {
+    const onSubmit = (formData:DataFormCardType) => {
         debugger
         console.log(formData);
         dispatch(UpdateCards(props.item.cardsPack_id, {_id:props.item._id, ...formData}))

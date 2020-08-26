@@ -52,3 +52,27 @@ export type QueryGetParamsType = {
     page: number
     pageCount: number
 }
+
+
+export type ParamsGetCardsType = {
+    cardAnswer: string
+    cardQuestion: string
+    cardsPack_id: string | undefined
+    min: null | number
+    max: null | number
+    sortCards: {goal: string, up: boolean}
+    page: number
+    pageCount: number
+}
+
+export type DataFormCardType = {
+    answer: string
+    cardsPack_id?:  string
+    grade:  string
+    question: string
+    rating: string
+    shots:  string
+    _id?: string | undefined
+}
+
+

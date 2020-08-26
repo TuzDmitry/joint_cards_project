@@ -1,7 +1,11 @@
 import axios from 'axios';
-import {ParamsTableType} from '../b2-bll/TableReducer';
 import {FormDataType} from '../b1-ui/common/TemplateFormComponent/TemplateForm';
-import {CardsPackType, PackType, PropsUpdatePackType, QueryGetParamsType} from '../b1-ui/common/utils/types';
+import {
+    CardsPackType, DataFormCardType,
+    PackType, ParamsGetCardsType,
+    PropsUpdatePackType,
+    QueryGetParamsType,
+} from '../b1-ui/common/utils/types';
 
 
 const instance = axios.create({
@@ -40,7 +44,6 @@ export const jointCardsApi = {
     },
     logIn(email: string, password: string, rememberMe: boolean) {
         return instance.post<LoginType>('auth/login', {email, password, rememberMe})
-
     },
     checkAuth(token: string) {
         return instance.post<LoginType>('auth/me', {token})
@@ -91,6 +94,13 @@ type DeletePackCardsResponseType = {
     tokenDeathTime: number
 }
 
+type UpdatePackCardsResponseType = {
+    success: boolean,
+    token: string,
+    tokenDeathTime: number,
+    updatedCardsPack: PackType
+}
+
 export const PacksCardsAPI = {
     getPacksWithCards(token: string, params: QueryGetParamsType) {
         let {packName, min, max, sortPacks, page, pageCount, user_id} = params;
@@ -120,7 +130,7 @@ export const PacksCardsAPI = {
     },
     updatePackWithCards(params: PropsUpdatePackType, token: string) {
         debugger
-        return instance.put<any>(`cards/pack`,
+        return instance.put<UpdatePackCardsResponseType>(`cards/pack`,
             {
                 cardsPack: params,
                 token
@@ -130,10 +140,54 @@ export const PacksCardsAPI = {
 
 }
 
+type CardType ={
+    answer: string
+    cardsPack_id: string
+    created:  string
+    grade: number
+    question:  string
+    rating: number
+    shots: number
+    type:  string
+    updated:  string
+    user_id:  string
+    __v: number
+    _id:  string
+}
+
+type ChoisedCardsPackType = {
+    cards: Array<CardType>
+    cardsTotalCount: number
+    maxGrade: number
+    minGrade: number
+    page: number
+    pageCount: number
+    token: string
+    tokenDeathTime: number
+}
+type AddCardsResponseType ={
+    newCard: CardType
+    success: boolean,
+    token: string,
+    tokenDeathTime: number,
+}
+type UpdateCardsResponseType ={
+    updatedCard: CardType
+    success: boolean,
+    token: string,
+    tokenDeathTime: number,
+}
+type DeleteCardsResponseType ={
+    deletedCard: CardType
+    success: boolean,
+    token: string,
+    tokenDeathTime: number,
+}
+
+
 
 export const CardsAPI = {
-    getCardsChoisedPack(token: string, params: any) {
-        debugger
+    getCardsChoisedPack(token: string, params: ParamsGetCardsType) {
         let {cardQuestion, min, max, sortCards, page, pageCount, cardsPack_id} = params;
 
         let id = cardsPack_id ? `&cardsPack_id=${cardsPack_id}` : ''
@@ -147,29 +201,25 @@ export const CardsAPI = {
         let minVal = min ? `&min=${min}` : ''
         let search = cardQuestion ? `&cardQuestion=${cardQuestion}` : ''
         debugger
-        return instance.get<any>(`cards/card?token=${token}${search}${minVal}${maxVal}${sortGoal}${pageNum}${elsOnPage}${id}`)
+        return instance.get<ChoisedCardsPackType>(`cards/card?token=${token}${search}${minVal}${maxVal}${sortGoal}${pageNum}${elsOnPage}${id}`)
     },
-
-    getCards(token: string, cardsPack_id: string) {
-        return instance.get<any>(`cards/card?token=${token}&cardsPack_id=${cardsPack_id}`)
-    },
-    createCards(token: string, formData: any) {
-        return instance.post<any>(`cards/card`,
+    createCards(token: string, formData: DataFormCardType) {
+        return instance.post<AddCardsResponseType>(`cards/card`,
             {
                 card: formData,
                 token
             })
     },
-    updateCards(formData: any, token: string) {
+    updateCards(formData: DataFormCardType, token: string) {
         debugger
-        return instance.put<any>(`cards/card`,
+        return instance.put<UpdateCardsResponseType>(`cards/card`,
             {
                 card: formData,
                 token
             })
     },
     deleteCards(token: string, CardId: string) {
-        return instance.delete<any>(`cards/card?token=${token}&id=${CardId}`)
+        return instance.delete<DeleteCardsResponseType>(`cards/card?token=${token}&id=${CardId}`)
     }
 
 }
