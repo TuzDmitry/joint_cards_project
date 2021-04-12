@@ -20,8 +20,8 @@ export const RegPage = () => {
     }
 
 
-    let [email, changeEmail] = useState('')
-    let [password, changePassword] = useState('')
+    let [email, changeEmail] = useState('');
+    let [password, changePassword] = useState('');
 
 
     if (isRegistrated) return <Redirect to={"/login"}/>
