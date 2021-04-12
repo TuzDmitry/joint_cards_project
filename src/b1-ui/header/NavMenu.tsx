@@ -9,9 +9,11 @@ export const NavMenu = () => {
     let {isAuth, avatar} = useSelector<AppStateType, InitialStateType>(state => state.loginPage)
     let dispatch = useDispatch();
 
+
     let onLogOutClick = () => {
         dispatch(LogOut())
     };
+
     return (
         <div className={'navBlock'}>
             <div className={'nav-wrapper'}>
