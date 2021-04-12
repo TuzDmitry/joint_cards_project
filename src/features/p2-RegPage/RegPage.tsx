@@ -17,7 +17,7 @@ export const RegPage = () => {
 
     const submitData = () => {
         dispatch(sendUserData(email, password))
-    }
+    };
 
 
     let [email, changeEmail] = useState('');
