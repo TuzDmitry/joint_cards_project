@@ -75,4 +75,9 @@ export type DataFormCardType = {
     _id?: string | undefined
 }
 
+export type PayloadProfileDataType={
+    name?:string
+    avatar?:string
+}
+
 

@@ -25,29 +25,6 @@ let dispatch=useDispatch()
         props.changeHide(true)
     }
 
-    // let [nameValue, changeNameValue] = useState('No Name')
-    // let [nameEditMode, switchNameEditMode] = useState(false)
-    //
-    // let [pathValue, changePathValue] = useState('/def')
-    // let [pathEditMode, switchPathEditMode] = useState(false)
-    //
-    // let [gradeValue, changeGradeValue] = useState(0)
-    // let [gradeEditMode, switchGradeEditMode] = useState(false)
-    //
-    // let [shotsValue, changeShotsValue] = useState(0)
-    // let [shotsEditMode, switchShotsEditMode] = useState(false)
-    //
-    // let [ratingValue, changeRatingValue] = useState(0)
-    // let [ratingEditMode, switchRatingEditMode] = useState(false)
-    //
-    // let [deckCoverValue, changeDeckCoverValue] = useState('url or base64')
-    // let [deckCoverEditMode, switchDeckCoverEditMode] = useState(false)
-    //
-    // let [privateValue, changePrivateValue] = useState(false)
-    // let [privateEditMode, switchPrivateEditMode] = useState(false)
-    //
-    // let [typeValue, changeTypeValue] = useState('pack')
-    // let [typeEditMode, switchTypeEditMode] = useState(false)
 
     let {name, path, grade, shots, rating, deckCover, private:privat, type}=useSelector<AppStateType, ParamsTableType>(state => state.tableParams)
 
@@ -90,29 +67,29 @@ let dispatch=useDispatch()
                     <td>type:</td>
                 </tr>
                 <tr className={'custom-row'}>
-                    <ItemTable itemValue={nameValue} changeItemValue={changeNameValue} type={'text'}
-                               itemEditMode={nameEditMode} switchItemEditMode={switchNameEditMode}/>
+                    <td><ItemTable itemValue={nameValue} changeItemValue={changeNameValue} type={'text'}
+                                  itemEditMode={nameEditMode} switchItemEditMode={switchNameEditMode}/></td>
 
-                    <ItemTable itemValue={pathValue} changeItemValue={changePathValue} type={'text'}
-                               itemEditMode={pathEditMode} switchItemEditMode={switchPathEditMode}/>
+                    <td><ItemTable itemValue={pathValue} changeItemValue={changePathValue} type={'text'}
+                                  itemEditMode={pathEditMode} switchItemEditMode={switchPathEditMode}/></td>
 
-                    <ItemTable itemValue={gradeValue} changeItemValue={changeGradeValue} type={'number'}
-                               itemEditMode={gradeEditMode} switchItemEditMode={switchGradeEditMode}/>
+                    <td><ItemTable itemValue={gradeValue} changeItemValue={changeGradeValue} type={'number'}
+                                  itemEditMode={gradeEditMode} switchItemEditMode={switchGradeEditMode}/></td>
 
-                    <ItemTable itemValue={shotsValue} changeItemValue={changeShotsValue} type={'number'}
-                               itemEditMode={shotsEditMode} switchItemEditMode={switchShotsEditMode}/>
+                    <td><ItemTable itemValue={shotsValue} changeItemValue={changeShotsValue} type={'number'}
+                                  itemEditMode={shotsEditMode} switchItemEditMode={switchShotsEditMode}/></td>
 
-                    <ItemTable itemValue={ratingValue} changeItemValue={changeRatingValue} type={'number'}
-                               itemEditMode={ratingEditMode} switchItemEditMode={switchRatingEditMode}/>
+                    <td><ItemTable itemValue={ratingValue} changeItemValue={changeRatingValue} type={'number'}
+                                  itemEditMode={ratingEditMode} switchItemEditMode={switchRatingEditMode}/></td>
 
-                    <ItemTable itemValue={deckCoverValue} changeItemValue={changeDeckCoverValue} type={'text'}
-                               itemEditMode={deckCoverEditMode} switchItemEditMode={switchDeckCoverEditMode}/>
+                    <td><ItemTable itemValue={deckCoverValue} changeItemValue={changeDeckCoverValue} type={'text'}
+                                  itemEditMode={deckCoverEditMode} switchItemEditMode={switchDeckCoverEditMode}/></td>
 
-                    <ItemTable itemValue={privateValue} changeItemValue={changePrivateValue} type={'checkbox'}
-                               itemEditMode={privateEditMode} switchItemEditMode={switchPrivateEditMode}/>
+                    <td><ItemTable itemValue={privateValue} changeItemValue={changePrivateValue} type={'checkbox'}
+                                  itemEditMode={privateEditMode} switchItemEditMode={switchPrivateEditMode}/></td>
 
-                    <ItemTable itemValue={typeValue} changeItemValue={changeTypeValue} type={'text'}
-                               itemEditMode={typeEditMode} switchItemEditMode={switchTypeEditMode}/>
+                    <td><ItemTable itemValue={typeValue} changeItemValue={changeTypeValue} type={'text'}
+                                  itemEditMode={typeEditMode} switchItemEditMode={switchTypeEditMode}/></td>
                 </tr>
                 </tbody>
             </div>
