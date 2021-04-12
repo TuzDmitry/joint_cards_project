@@ -12,13 +12,11 @@ export const RegPage = () => {
     const notification = useSelector<AppStateType, string>(state => state.regPage.notification);
     const {isRegistrated, inProgress} = useSelector<AppStateType, InitialStateType>(state => state.regPage);
 
-
     const dispatch = useDispatch();
 
     const submitData = () => {
         dispatch(sendUserData(email, password))
     };
-
 
     let [email, changeEmail] = useState('');
     let [password, changePassword] = useState('');
