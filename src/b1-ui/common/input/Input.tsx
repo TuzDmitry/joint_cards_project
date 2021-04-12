@@ -53,7 +53,6 @@ export const Input = (props: InputNyaPropsType) => {
     return (
         <div className='item'>
             <input className={inputClass} onKeyPress={onKeyPress} onChange={onChangeInputValue}  {...restProps} />
-            {/*{error ? <div className='error'>{error}</div> : null}*/}
             <div className='error'>{errorMessage}</div>
         </div>
     );
