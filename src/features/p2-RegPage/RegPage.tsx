@@ -9,8 +9,8 @@ import {Preloader} from "../../b1-ui/common/preloader/Preloader";
 
 export const RegPage = () => {
 
-    const notification = useSelector<AppStateType, string>(state => state.regPage.notification)
-    const {isRegistrated, inProgress} = useSelector<AppStateType, InitialStateType>(state => state.regPage)
+    const notification = useSelector<AppStateType, string>(state => state.regPage.notification);
+    const {isRegistrated, inProgress} = useSelector<AppStateType, InitialStateType>(state => state.regPage);
 
 
     const dispatch = useDispatch();
