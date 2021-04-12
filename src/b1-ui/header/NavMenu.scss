@@ -7,7 +7,21 @@
   }
 }
 
-.navBlock{
+.navBlock {
+  background-color: rgba(1, 13, 41, 0.87)
+}
+
+.nav-wrapper {
   height: 50px;
-  background-color: rgba(1,13,41,0.87)
+  width: 900px;
+  display: flex;
+  margin-left: auto;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.image-block {
+  margin-right: 50px;
+  display: flex;
+  align-items: center;
 }

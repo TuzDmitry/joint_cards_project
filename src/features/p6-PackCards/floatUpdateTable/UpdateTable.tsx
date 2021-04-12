@@ -61,26 +61,26 @@ export const UpdateTable = (props: PropsType) => {
                     <td>type:</td>
                 </tr>
                 <tr className={'custom-row'}>
-                    <ItemTable itemValue={nameValue} changeItemValue={changeNameValue} type={'text'}
-                               itemEditMode={nameEditMode} switchItemEditMode={switchNameEditMode}/>
+                    <td><ItemTable itemValue={nameValue} changeItemValue={changeNameValue} type={'text'}
+                                  itemEditMode={nameEditMode} switchItemEditMode={switchNameEditMode}/></td>
 
-                    <ItemTable itemValue={pathValue} changeItemValue={changePathValue} type={'text'}
-                               itemEditMode={pathEditMode} switchItemEditMode={switchPathEditMode}/>
+                    <td><ItemTable itemValue={pathValue} changeItemValue={changePathValue} type={'text'}
+                                  itemEditMode={pathEditMode} switchItemEditMode={switchPathEditMode}/></td>
 
-                    <ItemTable itemValue={gradeValue} changeItemValue={changeGradeValue} type={'number'}
-                               itemEditMode={gradeEditMode} switchItemEditMode={switchGradeEditMode}/>
+                    <td><ItemTable itemValue={gradeValue} changeItemValue={changeGradeValue} type={'number'}
+                                  itemEditMode={gradeEditMode} switchItemEditMode={switchGradeEditMode}/></td>
 
-                    <ItemTable itemValue={shotsValue} changeItemValue={changeShotsValue} type={'number'}
-                               itemEditMode={shotsEditMode} switchItemEditMode={switchShotsEditMode}/>
+                    <td><ItemTable itemValue={shotsValue} changeItemValue={changeShotsValue} type={'number'}
+                                  itemEditMode={shotsEditMode} switchItemEditMode={switchShotsEditMode}/></td>
 
-                    <ItemTable itemValue={ratingValue} changeItemValue={changeRatingValue} type={'number'}
-                               itemEditMode={ratingEditMode} switchItemEditMode={switchRatingEditMode}/>
+                    <td><ItemTable itemValue={ratingValue} changeItemValue={changeRatingValue} type={'number'}
+                                  itemEditMode={ratingEditMode} switchItemEditMode={switchRatingEditMode}/></td>
 
-                    <ItemTable itemValue={privateValue} changeItemValue={changePrivateValue} type={'checkbox'}
-                               itemEditMode={privateEditMode} switchItemEditMode={switchPrivateEditMode}/>
+                    <td><ItemTable itemValue={privateValue} changeItemValue={changePrivateValue} type={'checkbox'}
+                                  itemEditMode={privateEditMode} switchItemEditMode={switchPrivateEditMode}/></td>
 
-                    <ItemTable itemValue={typeValue} changeItemValue={changeTypeValue} type={'text'}
-                               itemEditMode={typeEditMode} switchItemEditMode={switchTypeEditMode}/>
+                    <td><ItemTable itemValue={typeValue} changeItemValue={changeTypeValue} type={'text'}
+                                  itemEditMode={typeEditMode} switchItemEditMode={switchTypeEditMode}/></td>
                 </tr>
                 </tbody>
             </div>

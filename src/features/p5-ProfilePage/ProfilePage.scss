@@ -1,6 +1,19 @@
 td,th {
+
 border: 2px solid black;
   padding: 10px;
   background-color: white;
 }
+td {
+  width: 300px;
+}
+
+.photo_edit_block{
+  position:relative;
+}
+
+.cancel_btn{
+  position: absolute;
+  top: -37px;
+  right: -10px;}
 

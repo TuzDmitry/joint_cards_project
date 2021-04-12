@@ -5,6 +5,7 @@ import {
     PackType, ParamsGetCardsType,
     PropsUpdatePackType,
     QueryGetParamsType,
+    PayloadProfileDataType,
 } from '../b1-ui/common/utils/types';
 
 
@@ -20,20 +21,36 @@ type UserDataType = {
     success: boolean
 }
 
-type LoginType = {
+export type LoginType = {
+    avatar: string
+    created: string
     email: string
+    isAdmin: boolean
     name: string
+    publicCardPacksCount: number
+    rememberMe: boolean
+    success: boolean
     token: string
     tokenDeathTime: number
+    updated: string
+    verified: boolean
+    __v: number
     _id: string
-    publicCardPacksCount: number
 }
+
 
 type RecoveryType = {
     html: string
     info: any
     status: string
     success: boolean
+}
+
+type CommonUpdatedResponseType = {
+    updatedUser: LoginType
+    success: boolean
+    token: string
+    tokenDeathTime: number
 }
 
 
@@ -47,8 +64,23 @@ export const jointCardsApi = {
     },
     checkAuth(token: string) {
         return instance.post<LoginType>('auth/me', {token})
-
     },
+    changeUserProfileData(token:string, obj:PayloadProfileDataType) {
+        debugger
+
+        return instance.put<CommonUpdatedResponseType>('auth/me',
+            {token, ...obj}
+            )
+    },
+    // changeUserProfileData(token: string, obj: any) {
+    //     debugger
+    //     const avatar = new FormData()
+    //     avatar.append('myFile', obj.avatar);
+    //
+    //     return instance.put<CommonUpdatedResponseType>('auth/me',
+    //         {token, avatar}
+    //     )
+    // },
     recoveryPassword(email: string) {
         return instance.post<RecoveryType>('auth/forgot',
             {
@@ -106,17 +138,17 @@ export const PacksCardsAPI = {
     },
 
     addPackWithCards(cardsPack: CardsPackType, token: string) {
-        return instance.post<CommonPackCardsResponseType<{newCardsPack: PackType}>>(`cards/pack`,
+        return instance.post<CommonPackCardsResponseType<{ newCardsPack: PackType }>>(`cards/pack`,
             {cardsPack, token}
         )
     },
 
     delPackWithCards(token: string, id_pack: string) {
-        return instance.delete<CommonPackCardsResponseType<{deletedCardsPack: PackType}>>(`cards/pack?token=${token}&id=${id_pack}`)
+        return instance.delete<CommonPackCardsResponseType<{ deletedCardsPack: PackType }>>(`cards/pack?token=${token}&id=${id_pack}`)
     },
     updatePackWithCards(params: PropsUpdatePackType, token: string) {
         debugger
-        return instance.put<CommonPackCardsResponseType<{updatedCardsPack: PackType}>>(`cards/pack`,
+        return instance.put<CommonPackCardsResponseType<{ updatedCardsPack: PackType }>>(`cards/pack`,
             {
                 cardsPack: params,
                 token
@@ -126,19 +158,19 @@ export const PacksCardsAPI = {
 
 }
 
-type CardType ={
+type CardType = {
     answer: string
     cardsPack_id: string
-    created:  string
+    created: string
     grade: number
-    question:  string
+    question: string
     rating: number
     shots: number
-    type:  string
-    updated:  string
-    user_id:  string
+    type: string
+    updated: string
+    user_id: string
     __v: number
-    _id:  string
+    _id: string
 }
 
 type ChoisedCardsPackType = {
@@ -178,7 +210,7 @@ export const CardsAPI = {
         return instance.get<ChoisedCardsPackType>(`cards/card?token=${token}${search}${minVal}${maxVal}${sortGoal}${pageNum}${elsOnPage}${id}`)
     },
     createCards(token: string, formData: DataFormCardType) {
-        return instance.post<CommonCardResponseType<{newCard: CardType}>>(`cards/card`,
+        return instance.post<CommonCardResponseType<{ newCard: CardType }>>(`cards/card`,
             {
                 card: formData,
                 token
@@ -186,14 +218,14 @@ export const CardsAPI = {
     },
     updateCards(formData: DataFormCardType, token: string) {
         debugger
-        return instance.put<CommonCardResponseType<{updatedCard: CardType}>>(`cards/card`,
+        return instance.put<CommonCardResponseType<{ updatedCard: CardType }>>(`cards/card`,
             {
                 card: formData,
                 token
             })
     },
     deleteCards(token: string, CardId: string) {
-        return instance.delete<CommonCardResponseType<{deletedCard: CardType}>>(`cards/card?token=${token}&id=${CardId}`)
+        return instance.delete<CommonCardResponseType<{ deletedCard: CardType }>>(`cards/card?token=${token}&id=${CardId}`)
     }
 
 }
