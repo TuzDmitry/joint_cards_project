@@ -17,11 +17,11 @@ export const RegPage = () => {
 
     const submitData = () => {
         dispatch(sendUserData(email, password))
-    }
+    };
 
 
-    let [email, changeEmail] = useState('')
-    let [password, changePassword] = useState('')
+    let [email, changeEmail] = useState('');
+    let [password, changePassword] = useState('');
 
 
     if (isRegistrated) return <Redirect to={"/login"}/>
