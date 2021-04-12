@@ -14,12 +14,12 @@ import {PackCards} from "../../features/p6-PackCards/PackCards";
 import { ListCardsPack } from '../../features/p7-ListCardsPack/ListCardsPack';
 
 const App = () => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     useEffect(
         () => {
             dispatch(Autorization())
-        },[])
+        },[]);
 
     return (
         <div className="App">
